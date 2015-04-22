@@ -1,0 +1,63 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".cs3724.group.mealmate.MainMenuFragment"
+android:background="#ff000000">
+
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    style="@android:style/TextAppearance.Holo.DialogWindowTitle">
+    <TextView
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Meal Mate"
+        android:textColor="@color/bright_foreground_inverse_material_light"
+        android:layout_span="2"
+        android:layout_column="0" />
+</TableRow>
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
+    <ImageView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imgViewImHungry"
+        android:scaleType="fitXY"
+        android:src="@drawable/ImHungry" />
+    <ImageView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imgViewHistory"
+        android:scaleType="fitXY"
+        android:src="@drawable/History" />
+</TableRow>
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
+    <ImageView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imgViewSchedule"
+        android:scaleType="fitXY"
+        android:src="@drawable/Schedule" />
+    <ImageView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imgViewSettings"
+        android:scaleType="fitXY"
+        android:src="@drawable/Settings" />
+</TableRow>
+</TableLayout>

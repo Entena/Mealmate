@@ -1,0 +1,134 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="@dimen/abc_action_bar_default_padding_material"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="cs3724.group.mealmate.HungryViewFragment">
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Recommended Values"
+            android:layout_gravity="center_horizontal" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"  android:gravity="bottom"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Calories" />
+        <EditText
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/editCalories" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"  android:gravity="bottom"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Protein" />
+        <EditText
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/editProtein" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"  android:gravity="bottom"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Carbs" />
+        <EditText
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/editCarbs" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"  android:gravity="bottom"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Fat" />
+        <EditText
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/editFat" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"  android:gravity="bottom"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Fiber" />
+        <EditText
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/editFiber" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"  android:gravity="bottom"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Sodium" />
+        <EditText
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/editSodium" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Dining Halls"
+            android:layout_gravity="end" />
+    </TableRow>
+    <TableRow android:layout_weight="1" android:layout_gravity="center">
+        <CheckBox
+            android:layout_width="0px" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Owens" android:id="@+id/checkBoxOwens"/>
+        <CheckBox
+            android:layout_width="0px" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Hokie Grill" android:id="@+id/checkBoxHokieGrill"/>
+        <CheckBox
+            android:layout_width="0px" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="D2" android:id="@+id/checkBoxD2"/>
+    </TableRow>
+    <TableRow android:layout_weight="1" android:layout_gravity="center">
+        <CheckBox
+            android:layout_width="0px" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="West End" android:id="@+id/checkBoxWestEnd"/>
+        <CheckBox
+            android:layout_width="0px" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Turner Place" android:id="@+id/checkBoxTurnerPlace"/>
+        <CheckBox
+            android:layout_width="0px" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="DX" android:id="@+id/checkBoxDX"/>
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <Button
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Go!" android:layout_gravity="center"
+            android:id="@+id/btnGo"/>
+    </TableRow>
+</TableLayout>
