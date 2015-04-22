@@ -1,0 +1,143 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_margin="@dimen/abc_action_bar_default_padding_material"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" tools:context="cs3724.group.mealmate.ScheduleAddMealViewFragment">
+        <TableRow android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Recommended Values"
+                android:layout_gravity="center_horizontal" />
+        </TableRow>
+        <TableRow android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"  android:gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Calories" />
+            <EditText
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/scheduleAddMealEditCalories" />
+        </TableRow>
+        <TableRow android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"  android:gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Protein" />
+            <EditText
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/scheduleAddMealEditProtein" />
+        </TableRow>
+        <TableRow android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"  android:gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Carbs" />
+            <EditText
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/scheduleAddMealEditCarbs" />
+        </TableRow>
+        <TableRow android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"  android:gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Fat" />
+            <EditText
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/scheduleAddMealEditFat" />
+        </TableRow>
+        <TableRow android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"  android:gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Fiber" />
+            <EditText
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/scheduleAddMealEditFiber" />
+        </TableRow>
+        <TableRow android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"  android:gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Sodium" />
+            <EditText
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/scheduleAddMealEditSodium" />
+        </TableRow>
+        <TableRow android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent" android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Dining Halls"
+                android:layout_gravity="end" />
+        </TableRow>
+        <TableRow android:layout_weight="1" android:layout_gravity="center">
+            <CheckBox
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Owens" android:id="@+id/scheduleAddMealCheckBoxOwens"/>
+            <CheckBox
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Hokie Grill" android:id="@+id/scheduleAddMealCheckBoxHokieGrill"/>
+            <CheckBox
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="D2" android:id="@+id/scheduleAddMealCheckBoxD2"/>
+        </TableRow>
+        <TableRow android:layout_weight="1" android:layout_gravity="center">
+            <CheckBox
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="West End" android:id="@+id/scheduleAddMealCheckBoxWestEnd"/>
+            <CheckBox
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Turner Place" android:id="@+id/scheduleAddMealCheckBoxTurnerPlace"/>
+            <CheckBox
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="DX" android:id="@+id/scheduleAddMealCheckBoxDX"/>
+        </TableRow>
+        <TableRow android:layout_weight="1">
+            <Button android:layout_weight="1" android:layout_height="wrap_content"
+                android:layout_width="0px" android:text="MapView" android:id="@+id/btnScheduleAddMealMap"/>
+        </TableRow>
+        <TableRow android:layout_weight="1">
+            <Button
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:id="@+id/btnScheduleAddMealBack" />
+            <Button
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Go!"
+                android:id="@+id/btnScheduleAddMealGo"/>
+        </TableRow>
+</TableLayout>

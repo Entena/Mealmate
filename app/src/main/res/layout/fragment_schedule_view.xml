@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_margin="@dimen/abc_action_bar_default_padding_material"
+    android:orientation="vertical" android:layout_height="match_parent" tools:context="cs3724.group.mealmate.ScheduleViewFragment">
+
+
+    <Spinner
+        android:layout_width="match_parent" android:entries="@array/days"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerDay"
+        android:layout_gravity="center_horizontal" />
+    <TableLayout
+        android:layout_width="match_parent" android:layout_weight="1"
+        android:layout_height="match_parent" android:layout_gravity="center" android:id="@+id/scheduleTable">
+        <TableRow>
+            <TextView
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content" android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Time" />
+            <TextView
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content" android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Location"/>
+            <TextView
+                android:layout_width="0px" android:layout_weight="1"
+                android:layout_height="wrap_content" android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Meal"/>
+        </TableRow>
+    </TableLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add A Meal"
+        android:id="@+id/btnAddAMeal" />
+</LinearLayout>
