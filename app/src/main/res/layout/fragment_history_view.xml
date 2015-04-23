@@ -1,0 +1,81 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_margin="@dimen/abc_action_bar_default_padding_material"
+    android:layout_height="match_parent" tools:context="cs3724.group.mealmate.HistoryViewFragment">
+    <TableRow>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerHistoryDay" />
+    </TableRow>
+    <TableRow>
+        <Spinner
+            android:layout_width="match_parent" android:entries="@array/days"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerHistoryDayOfWeek" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TableLayout android:layout_weight="1">
+            <!--Table for history entries-->
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Add"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Location"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Food"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Cl"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="P"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Cb"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Ft"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Fb"/>
+                <TextView
+                    android:layout_width="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="S"/>
+            </TableRow>
+        </TableLayout>
+    </TableRow>
+    <TableRow>
+        <Button
+            android:layout_width="0px" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Add Meal"
+            android:id="@+id/btnHistoryAddMeal" />
+        <Button
+            android:layout_width="0px" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Goals"
+            android:id="@+id/btnHistoryGoals" />
+    </TableRow>
+</TableLayout>

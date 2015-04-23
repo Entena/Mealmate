@@ -1,0 +1,91 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:padding="@dimen/abc_action_bar_default_padding_material"
+    android:layout_height="match_parent" tools:context="cs3724.group.mealmate.SettingsFragment">
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Settings"/>
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Age"/>
+        <EditText
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/settingsEditAge" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Sex"/>
+        <Spinner
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:entries="@array/sex"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerGender" />
+
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Height"/>
+        <EditText
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/settingsEditHeight" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Weight"/>
+        <EditText
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/settingsEditWeight" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Reminder"/>
+        <EditText
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/settingsEditReminder" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <Button
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content" android:layout_gravity="center"
+            android:text="Pebble Settings"
+            android:id="@+id/btnSettingsPebbleSettings" />
+    </TableRow>
+    <TableRow android:layout_weight="1">
+        <Button
+            android:layout_width="match_parent" android:layout_weight="1"
+            android:layout_height="wrap_content" android:layout_gravity="center"
+            android:text="Save Changes"
+            android:id="@+id/btnSettingsSaveChanges" />
+    </TableRow>
+</TableLayout>
