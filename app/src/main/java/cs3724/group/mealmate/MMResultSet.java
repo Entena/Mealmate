@@ -6,6 +6,7 @@ import android.database.Cursor;
  * Created by Pat on 4/26/2015.
  */
 public class MMResultSet {
+    // the cursor to the result set
     Cursor cursor;
     public MMResultSet(Cursor cursor) {
         this.cursor = cursor;
