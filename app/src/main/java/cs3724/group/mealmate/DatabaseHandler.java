@@ -128,13 +128,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             Log.e("TESTING", "DB Null in add setting");
         }
         ContentValues values = new ContentValues();
+        values.put(ID, "1");
         values.put(AGE, set.getAge());
         values.put(SEX, set.getSex());
         values.put(HEIGHT, set.getHeight());
         values.put(WEIGHT, set.getWeight());
 
         // Inserting Row
-        db.insert(TABLE_SETTINGS, null, values);
+        db.insertWithOnConflict(TABLE_SETTINGS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     public void addGoal(Goal goal) {
@@ -151,7 +152,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<CalendarFoodItem> getHistory() {
         ArrayList<CalendarFoodItem> history = new ArrayList<>();
         //SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM history", null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_HISTORY, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
             history.add(new CalendarFoodItem(c.getString(0), c.getString(1), c.getString(2)));
@@ -164,7 +165,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<CalendarFoodItem> getSchedule() {
         ArrayList<CalendarFoodItem> schedule = new ArrayList<>();
         //SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM schedule", null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_SCHEDULE, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
             schedule.add(new CalendarFoodItem(c.getString(0), c.getString(1), c.getString(2)));
@@ -177,7 +178,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<Goal> getGoals() {
         ArrayList<Goal> goals = new ArrayList<>();
         //SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM goals", null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_GOALS, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
             goals.add(new Goal(c.getString(0), c.getString(1)));
