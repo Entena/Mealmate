@@ -132,11 +132,6 @@
             <Button
                 android:layout_width="0px" android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Back"
-                android:id="@+id/btnScheduleAddMealBack" />
-            <Button
-                android:layout_width="0px" android:layout_weight="1"
-                android:layout_height="wrap_content"
                 android:text="Go!"
                 android:id="@+id/btnScheduleAddMealGo"/>
         </TableRow>
