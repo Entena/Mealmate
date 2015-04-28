@@ -36,11 +36,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String FOOD_ID = "food_id";
     private static final String GOAL_ITEM = "goal_item";
     private static final String GOAL_METRIC = "goal_metric";
+    private static final String GOAL_TIME = "goal_time";
     private static final String AGE = "age";
     private static final String SEX = "sex";
     private static final String HEIGHT = "height";
     private static final String WEIGHT = "weight";
     private static final String REMINDER = "reminder";
+    private static final String PEBBLE = "pebble";
 
     private static String PATH;
 
@@ -66,7 +68,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String CREATE_GOALS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_GOALS + "("
                 + ID + " INTEGER PRIMARY KEY," + GOAL_ITEM + " TEXT,"
-                + GOAL_METRIC + " TEXT)";
+                + GOAL_METRIC + " TEXT," + GOAL_TIME + " TEXT)";
         db.execSQL(CREATE_GOALS_TABLE);
         String CREATE_SCHEDULE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_SCHEDULE + "("
                 + ID + " INTEGER PRIMARY KEY," + DATE + " TEXT,"
@@ -74,7 +76,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_SCHEDULE_TABLE);
         String CREATE_SETTINGS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_SETTINGS + "("
                 + ID + " INTEGER PRIMARY KEY," + AGE + " TEXT,"
-                + SEX + " TEXT," + HEIGHT + " TEXT," + WEIGHT + " TEXT," + REMINDER + "TEXT)";
+                + SEX + " TEXT," + HEIGHT + " TEXT," + WEIGHT + " TEXT," + REMINDER + " TEXT,"
+                + PEBBLE + " TEXT)";
         db.execSQL(CREATE_SETTINGS_TABLE);
             Log.e("TESTING", "test");
         } catch (Exception e) {
@@ -135,6 +138,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(SEX, set.getSex());
         values.put(HEIGHT, set.getHeight());
         values.put(WEIGHT, set.getWeight());
+        values.put(REMINDER, set.getReminderTime());
+        String pebCon;
+        if (set.isPebbleConnected()) {
+            pebCon = "true";
+        } else {
+            pebCon = "false";
+        }
+        values.put(REMINDER, pebCon);
 
         // Inserting Row
         db.insertWithOnConflict(TABLE_SETTINGS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
@@ -145,6 +156,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(GOAL_ITEM, goal.getGoalItem());
         values.put(GOAL_METRIC, goal.getGoalMetric());
+        values.put(GOAL_TIME, goal.getGoalTime());
 
         // Inserting Row
         db.insert(TABLE_GOALS, null, values);
@@ -183,7 +195,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_GOALS, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            goals.add(new Goal(c.getString(0), c.getString(1)));
+            goals.add(new Goal(c.getString(0), c.getString(1), c.getString(2)));
         }
         c.close();
         db.close();
@@ -200,7 +212,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_SETTINGS, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            setting = new Setting(c.getString(1), c.getString(2), c.getString(3), c.getString(4));
+            boolean pebCon;
+            if(c.getString(6).equals("true")) {
+                pebCon = true;
+            } else {
+                pebCon = false;
+            }
+            setting = new Setting(c.getString(1), c.getString(2), c.getString(3),
+                    c.getString(4), c.getString(5), pebCon);
             break;
         }
         c.close();
