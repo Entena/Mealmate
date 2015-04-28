@@ -75,11 +75,19 @@
             android:id="@+id/settingsEditReminder" />
     </TableRow>
     <TableRow android:layout_weight="1">
-        <Button
+        <TextView
             android:layout_width="match_parent" android:layout_weight="1"
-            android:layout_height="wrap_content" android:layout_gravity="center"
-            android:text="Pebble Settings"
-            android:id="@+id/btnSettingsPebbleSettings" />
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Use Pebble"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/checkBox" />
+
+
     </TableRow>
     <TableRow android:layout_weight="1">
         <Button
