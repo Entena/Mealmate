@@ -4,6 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 /**
  * Created by Pat on 4/26/2015.
+ * Use DataBaseHelper to get the foodDB from the assets folder and feed that DB into this
+ * constructor. This class allows easy searching of the food DB
  */
 public class SQLiteHelper {
     private static final String PATH = "main/assets/food.db";
@@ -40,7 +42,7 @@ public class SQLiteHelper {
             query.append(" FAT < " + fat + " AND");
         }
         if (fib != null) {
-            query.append(" FIBER < " + fib + " AND");
+            query.append(" FIBER > " + fib + " AND");
         }
         if (sod != null) {
             query.append(" SOD < " + sod + "AND");

@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * This class copies the food DB from assets into the databases folder, use create, open, and then
+ * get to obtain the newly copied DB. Feed this DB into a SQLiteHelper constructor for methods
+ * to easily query the DB
+ */
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.

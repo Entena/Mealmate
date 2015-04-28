@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Pat on 4/26/2015.
+ * This class creates a user info DB and corresponding tables if one doesn't exist. Also allows
+ * for easy insertion of records into the user info tables. Also easily get user info.
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
