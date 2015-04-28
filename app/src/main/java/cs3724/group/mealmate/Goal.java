@@ -6,10 +6,12 @@ package cs3724.group.mealmate;
 public class Goal {
     String goalItem;
     String goalMetric;
+    String goalTime;
 
-    public Goal(String goalItem, String goalMetric) {
+    public Goal(String goalItem, String goalMetric, String goalTime) {
         this.goalItem = goalItem;
         this.goalMetric = goalMetric;
+        this.goalTime = goalTime;
     }
 
     public String getGoalItem() {
@@ -19,4 +21,6 @@ public class Goal {
     public String getGoalMetric() {
         return goalMetric;
     }
+
+    public String getGoalTime() {return goalTime; }
 }
