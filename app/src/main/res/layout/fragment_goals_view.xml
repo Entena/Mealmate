@@ -1,0 +1,71 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="cs3724.group.mealmate.GoalsViewFragment">
+    <TableRow>
+        <Spinner
+            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content" android:layout_span="8"
+            android:id="@+id/spinner"/>
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Goal"/>
+        <TextView
+            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Duration"/>
+        <TextView
+            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Cl"/>
+        <TextView
+            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="P"/>
+        <TextView
+            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Cb"/>
+        <TextView
+            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Ft"/>
+        <TextView
+            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Fb"/>
+        <TextView
+            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="S"/>
+    </TableRow>
+    <TableRow>
+        <TableLayout>
+            <!--Fill goals here-->
+        </TableLayout>
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Totals"/>
+    </TableRow>
+    <TableRow>
+        <Button
+            android:layout_width="0px" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Add Goal"
+            android:id="@+id/btnAddGoal" />
+    </TableRow>
+</TableLayout>

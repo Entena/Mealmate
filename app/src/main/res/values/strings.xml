@@ -15,5 +15,9 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
-
+    <string-array name="duration">
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
+    </string-array>
 </resources>
