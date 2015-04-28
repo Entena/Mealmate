@@ -3,13 +3,21 @@ package cs3724.group.mealmate;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.IOException;
+
 
 public class MainActivity extends ActionBarActivity {
+    // Fragment tags
+    public final static String FRAG_RETAIN_TAG = "FRAG_RETAIN";
+
+    // local variables
+    RetainedFragment retainedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +28,36 @@ public class MainActivity extends ActionBarActivity {
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainScrollView, mmf, "MAINMENU");
         fragmentTransaction.commit();
+
+        // set up retained fragment if not already set up
+        if (getFragmentManager().findFragmentByTag(FRAG_RETAIN_TAG) == null) {
+            // create fragment
+            retainedFragment = new RetainedFragment();
+            fragmentTransaction = getFragmentManager()
+                    .beginTransaction();
+            // Add retained fragment to the activity, without a container,
+            // meanwhile associate it with FRAG_RETAIN_TAG
+            fragmentTransaction.add(retainedFragment, FRAG_RETAIN_TAG);
+            fragmentTransaction.commit();
+
+            // set up DBs
+            DataBaseHelper myDbHelper = new DataBaseHelper(this);
+            try {
+                myDbHelper.createDataBase();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            myDbHelper.openDataBase();
+            SQLiteDatabase db = myDbHelper.getDB();
+            SQLiteHelper foodDB = new SQLiteHelper(db);
+
+            DatabaseHandler userInfoDB = new DatabaseHandler(this);
+            userInfoDB.createDB();
+
+            // add DBs to retained fragment
+            retainedFragment.setFoodDB(foodDB);
+            retainedFragment.setUserInfoDB(userInfoDB);
+        }
     }
 
 

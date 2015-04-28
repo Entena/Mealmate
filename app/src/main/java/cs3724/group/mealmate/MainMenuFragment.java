@@ -27,6 +27,9 @@ public class MainMenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
         setGlobals(view);
         setListeners(view);
+
+        // Lock imgViews if settings not created
+
         return view;
     }
 
