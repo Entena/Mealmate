@@ -2,6 +2,7 @@ package cs3724.group.mealmate;
 
 /**
  * Created by Pat on 4/26/2015.
+ * Class is used to store history and schedule records since they have the same fields
  */
 public class CalendarFoodItem {
 

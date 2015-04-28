@@ -176,10 +176,36 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return history;
     }
 
+    public ArrayList<CalendarFoodItem> getHistory(String date) {
+        ArrayList<CalendarFoodItem> history = new ArrayList<>();
+        //SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_HISTORY + " WHERE " + DATE + " = ?; ", new String[] {date});
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            history.add(new CalendarFoodItem(c.getString(0), c.getString(1), c.getString(2)));
+        }
+        c.close();
+        db.close();
+        return history;
+    }
+
     public ArrayList<CalendarFoodItem> getSchedule() {
         ArrayList<CalendarFoodItem> schedule = new ArrayList<>();
         //SQLiteDatabase db = this.getWritableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_SCHEDULE, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            schedule.add(new CalendarFoodItem(c.getString(0), c.getString(1), c.getString(2)));
+        }
+        c.close();
+        db.close();
+        return schedule;
+    }
+
+    public ArrayList<CalendarFoodItem> getSchedule(String date) {
+        ArrayList<CalendarFoodItem> schedule = new ArrayList<>();
+        //SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_SCHEDULE + " WHERE " + DATE + " = ?; ", new String[] {date});
         c.moveToFirst();
         while (!c.isAfterLast()) {
             schedule.add(new CalendarFoodItem(c.getString(0), c.getString(1), c.getString(2)));
