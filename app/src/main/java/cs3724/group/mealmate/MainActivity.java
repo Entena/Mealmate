@@ -1,5 +1,6 @@
 package cs3724.group.mealmate;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -13,7 +14,7 @@ import android.view.MenuItem;
 import java.io.IOException;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     // Fragment tags
     public final static String FRAG_RETAIN_TAG = "FRAG_RETAIN";
 
