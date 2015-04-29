@@ -19,7 +19,7 @@ import java.io.OutputStream;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.
-    private static String DB_PATH;
+    private static String DB_PATH = "/data/data/cs3724.group.mealmate/databases/";
 
     private static String DB_NAME = "food.db";
 
@@ -34,7 +34,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      */
     public DataBaseHelper(Context context) {
         super(context, DB_NAME, null, 1);
-        DB_PATH = context.getFilesDir().getPath()+"/databases/";
+        //DB_PATH = context.getFilesDir().getPath()+"/databases/";
+        System.out.println(DB_PATH);
         this.myContext = context;
     }
 
@@ -59,6 +60,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             } catch (IOException e) {
 
+                System.out.println(e.toString());
                 throw new Error("Error copying database");
 
             }

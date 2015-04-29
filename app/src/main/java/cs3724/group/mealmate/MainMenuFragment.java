@@ -13,7 +13,11 @@ import android.widget.Toast;
 
 
 public class MainMenuFragment extends Fragment {
+    public final static String FRAG_RETAIN_TAG = "FRAG_RETAIN";
+
     ImageView imgHungry, imgHistory, imgSchedule, imgSetting;
+    RetainedFragment retainFrag;
+    DatabaseHandler userInfoDB;
 
     public MainMenuFragment() {
         // Required empty public constructor
@@ -28,7 +32,23 @@ public class MainMenuFragment extends Fragment {
         setGlobals(view);
         setListeners(view);
 
-        // Lock imgViews if settings not created
+        retainFrag = (RetainedFragment) getFragmentManager()
+                .findFragmentByTag(FRAG_RETAIN_TAG);
+        if(retainFrag == null) {
+            imgHungry.setEnabled(false);
+            imgHistory.setEnabled(false);
+            imgSchedule.setEnabled(false);
+        } else {
+            if (retainFrag.getUserInfoDB().getUserSetting() == null) {
+                imgHungry.setEnabled(false);
+                imgHistory.setEnabled(false);
+                imgSchedule.setEnabled(false);
+            } else {
+                imgHungry.setEnabled(true);
+                imgHistory.setEnabled(true);
+                imgSchedule.setEnabled(true);
+            }
+        }
 
         return view;
     }
@@ -111,4 +131,5 @@ public class MainMenuFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }

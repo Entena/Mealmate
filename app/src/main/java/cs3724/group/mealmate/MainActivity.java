@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -57,6 +58,13 @@ public class MainActivity extends ActionBarActivity {
             // add DBs to retained fragment
             retainedFragment.setFoodDB(foodDB);
             retainedFragment.setUserInfoDB(userInfoDB);
+        }
+        if (savedInstanceState != null) {
+            // Every time during the recreate of the activity, the
+            // retainedFragment will be lost, so we need to reassign the
+            // retainedFragment
+            retainedFragment = (RetainedFragment) getFragmentManager()
+                    .findFragmentByTag(FRAG_RETAIN_TAG);
         }
     }
 

@@ -138,6 +138,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(SEX, set.getSex());
         values.put(HEIGHT, set.getHeight());
         values.put(WEIGHT, set.getWeight());
+        //System.out.println("TEST " + set.getReminderTime());
         values.put(REMINDER, set.getReminderTime());
         String pebCon;
         if (set.isPebbleConnected()) {
@@ -145,7 +146,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         } else {
             pebCon = "false";
         }
-        values.put(REMINDER, pebCon);
+        values.put(PEBBLE, pebCon);
 
         // Inserting Row
         db.insertWithOnConflict(TABLE_SETTINGS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
@@ -239,13 +240,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         c.moveToFirst();
         while (!c.isAfterLast()) {
             boolean pebCon;
-            if(c.getString(6).equals("true")) {
+            if(c.getString(6) != null && c.getString(6).equals("true")) {
                 pebCon = true;
             } else {
                 pebCon = false;
             }
             setting = new Setting(c.getString(1), c.getString(2), c.getString(3),
                     c.getString(4), c.getString(5), pebCon);
+            //System.out.println("TEST " + setting.getReminderTime());
             break;
         }
         c.close();
