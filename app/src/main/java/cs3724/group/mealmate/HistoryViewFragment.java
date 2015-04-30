@@ -47,7 +47,11 @@ public class HistoryViewFragment extends Fragment {
         btnGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO point to goals fragment when we make it
+                GoalsViewFragment gvf = new GoalsViewFragment();
+                FragmentTransaction fragmentTransaction;
+                fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mainScrollView, gvf, "GOALSVIEWFRAGMENT");
+                fragmentTransaction.addToBackStack("GOALSVIEWFRAGMENT").commit();
             }
         });
     }
