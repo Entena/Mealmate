@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.io.IOException;
 
@@ -25,17 +27,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MainMenuFragment mmf = new MainMenuFragment();
-        FragmentTransaction fragmentTransaction;
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainScrollView, mmf, "MAINMENU");
-        fragmentTransaction.commit();
 
         // set up retained fragment if not already set up
         if (getFragmentManager().findFragmentByTag(FRAG_RETAIN_TAG) == null) {
             // create fragment
             retainedFragment = new RetainedFragment();
-            fragmentTransaction = getFragmentManager()
+            FragmentTransaction fragmentTransaction = getFragmentManager()
                     .beginTransaction();
             // Add retained fragment to the activity, without a container,
             // meanwhile associate it with FRAG_RETAIN_TAG
@@ -60,6 +57,13 @@ public class MainActivity extends Activity {
             retainedFragment.setFoodDB(foodDB);
             retainedFragment.setUserInfoDB(userInfoDB);
         }
+
+        MainMenuFragment mmf = new MainMenuFragment();
+        FragmentTransaction fragmentTransaction;
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainScrollView, mmf, "MAINMENU");
+        fragmentTransaction.commit();
+
         if (savedInstanceState != null) {
             // Every time during the recreate of the activity, the
             // retainedFragment will be lost, so we need to reassign the

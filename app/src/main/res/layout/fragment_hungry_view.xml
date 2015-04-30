@@ -36,19 +36,7 @@
             android:ems="10"
             android:id="@+id/editProtein" />
     </TableRow>
-    <TableRow android:layout_weight="1">
-        <TextView
-            android:layout_width="match_parent" android:layout_weight="1"
-            android:layout_height="match_parent"  android:gravity="bottom"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Carbs" />
-        <EditText
-            android:layout_width="match_parent" android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:id="@+id/editCarbs" />
-    </TableRow>
+
     <TableRow android:layout_weight="1">
         <TextView
             android:layout_width="match_parent" android:layout_weight="1"

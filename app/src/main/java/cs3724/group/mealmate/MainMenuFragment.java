@@ -34,21 +34,7 @@ public class MainMenuFragment extends Fragment {
 
         retainFrag = (RetainedFragment) getFragmentManager()
                 .findFragmentByTag(FRAG_RETAIN_TAG);
-        if(retainFrag == null) {
-            imgHungry.setEnabled(false);
-            imgHistory.setEnabled(false);
-            imgSchedule.setEnabled(false);
-        } else {
-            if (retainFrag.getUserInfoDB().getUserSetting() == null) {
-                imgHungry.setEnabled(false);
-                imgHistory.setEnabled(false);
-                imgSchedule.setEnabled(false);
-            } else {
-                imgHungry.setEnabled(true);
-                imgHistory.setEnabled(true);
-                imgSchedule.setEnabled(true);
-            }
-        }
+        checkSetting();
 
         return view;
     }
@@ -90,11 +76,11 @@ public class MainMenuFragment extends Fragment {
     public void OnClick(View v){
         if(v.getId() == imgHungry.getId()){
             //Toast.makeText(getActivity(), "Clicked I'm Hungry", Toast.LENGTH_SHORT).show();
-            HungryViewFragment hvf = new HungryViewFragment();
+            ScheduleAddMealViewFragment sadmvf = new ScheduleAddMealViewFragment();
             FragmentTransaction fragmentTransaction;
             fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.mainScrollView, hvf, "HUNGRYVIEWFRAGMENT");
-            fragmentTransaction.addToBackStack("HUNGRYVIEWFRAGMENT").commit();
+            fragmentTransaction.replace(R.id.mainScrollView, sadmvf, "SCHEDULEADDMEALVIEWWFRAGMENT");
+            fragmentTransaction.addToBackStack("SCHEDULEADDMEALVIEWWFRAGMENT").commit();
         }
         if(v.getId() == imgHistory.getId()){
             //Toast.makeText(getActivity(), "Clicked History", Toast.LENGTH_SHORT).show();
@@ -120,6 +106,36 @@ public class MainMenuFragment extends Fragment {
             fragmentTransaction.replace(R.id.mainScrollView, sf, "SETTINGSFRAGMENT");
             fragmentTransaction.addToBackStack("SETTINGSFRAGMENT").commit();
         }
+    }
+
+    public void checkSetting() {
+        if(retainFrag == null) {
+            imgHungry.setEnabled(false);
+            imgHistory.setEnabled(false);
+            imgSchedule.setEnabled(false);
+        } else {
+            if (retainFrag.getUserInfoDB().getUserSetting() == null) {
+                imgHungry.setEnabled(false);
+                imgHistory.setEnabled(false);
+                imgSchedule.setEnabled(false);
+            } else {
+                imgHungry.setEnabled(true);
+                imgHistory.setEnabled(true);
+                imgSchedule.setEnabled(true);
+            }
+        }
+    }
+
+    public ImageView getImgHungry() {
+        return imgHungry;
+    }
+
+    public ImageView getImgSchedule() {
+        return imgSchedule;
+    }
+
+    public ImageView getImgHistory() {
+        return imgHistory;
     }
 
     @Override

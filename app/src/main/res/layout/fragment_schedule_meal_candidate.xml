@@ -34,11 +34,6 @@
                     android:layout_width="wrap_content" android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Cb"/>
-                <TextView
-                    android:layout_width="wrap_content" android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Ft"/>
                 <TextView
                     android:layout_width="wrap_content" android:layout_weight="1"
@@ -60,11 +55,6 @@
             android:id="@+id/spinnerTime" />
     </TableRow>
     <TableRow>
-        <Button
-            android:layout_width="0px" android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:id="@+id/btnScheduleMealCandidateBack" />
         <Button
             android:layout_width="0px" android:layout_weight="1"
             android:layout_height="wrap_content"
