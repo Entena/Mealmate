@@ -18,6 +18,13 @@ public class MMResultSet {
         return cursor.getString(1);
     }
 
+    public String getFoodID() {
+        if(!cursor.isAfterLast()) {
+            return cursor.getString(0);
+        }
+        return null;
+    }
+
     public String getFoodName() {
         if(!cursor.isAfterLast()) {
             return cursor.getString(1);
@@ -78,5 +85,9 @@ public class MMResultSet {
         if(!cursor.isAfterLast()) {
             cursor.moveToNext();
         }
+    }
+
+    public boolean hasNext() {
+        return !cursor.isAfterLast();
     }
 }

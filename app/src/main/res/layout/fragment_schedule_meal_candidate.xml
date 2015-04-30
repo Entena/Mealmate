@@ -1,64 +1,118 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:layout_margin="@dimen/abc_action_bar_default_padding_material"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/abc_action_bar_default_padding_material"
+    android:stretchColumns="*"
     tools:context="cs3724.group.mealmate.ScheduleMealCandidateFragment">
-    <TableRow android:layout_weight="1" android:layout_width="match_parent">
-        <TableLayout android:layout_weight="1" android:layout_width="match_parent"><!--Inner table for meals to populate-->
-            <TableRow>
-                <TextView
-                    android:layout_width="wrap_content" android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Add"/>
-                <TextView
-                    android:layout_width="wrap_content" android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Location"/>
-                <TextView
-                    android:layout_width="wrap_content" android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Food"/>
-                <TextView
-                    android:layout_width="wrap_content" android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Cl"/>
-                <TextView
-                    android:layout_width="wrap_content" android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="P"/>
-                <TextView
-                    android:layout_width="wrap_content" android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Ft"/>
-                <TextView
-                    android:layout_width="wrap_content" android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Fb"/>
-                <TextView
-                    android:layout_width="wrap_content" android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="S"/>
-            </TableRow>
-        </TableLayout>
+
+    <TableRow
+
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Add"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Location" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Food" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Cl" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="P" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Ft" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Fb" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="S" />
     </TableRow>
-    <TableRow >
+
+    <TableRow>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:fillViewport="true"
+                android:layout_height="match_parent">
+
+                <!--android:layout_weight="1"-->
+                <TableLayout
+
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:stretchColumns="*"
+                    android:id="@+id/resultsTable"><!--Inner table for meals to populate-->
+                </TableLayout>
+
+            </ScrollView>
+        </HorizontalScrollView>
+
+
+    </TableRow>
+
+    <TableRow>
+
         <Spinner
-            android:layout_width="wrap_content" android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/spinnerTime" />
     </TableRow>
+
     <TableRow>
+
         <Button
-            android:layout_width="0px" android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Add Meal"
-            android:id="@+id/btnScheduleMealCandidateAddMeal"/>
+            android:id="@+id/btnScheduleMealCandidateAddMeal" />
     </TableRow>
 </TableLayout>

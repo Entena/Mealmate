@@ -12,7 +12,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+
 public class ScheduleAddMealViewFragment extends Fragment {
+
     public final static String FRAG_RETAIN_TAG = "FRAG_RETAIN";
 
     // retained fragment
@@ -81,6 +84,33 @@ public class ScheduleAddMealViewFragment extends Fragment {
         btnAddMealGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<String> halls = new ArrayList<>();
+
+                if (owensHG.isChecked()) {
+                    halls.add("Owens");
+                }
+                if (b37.isChecked()) {
+                    halls.add("b37");
+                }
+                if (d2dx.isChecked()) {
+                    halls.add("D2");
+                }
+                if (deets.isChecked()) {
+                    halls.add("Deets");
+                }
+                if (westEnd.isChecked()) {
+                    halls.add("West End");
+                }
+                if (turner.isChecked()) {
+                    halls.add("Turner");
+                }
+                /*MMResultSet rs = foodDB.search(cals.getText().toString(),
+                        protein.getText().toString(), fat.getText().toString(),
+                        fiber.getText().toString(), sodium.getText().toString(),
+                        halls);
+
+                retainFrag.setResultSet(rs);*/
+
                 ScheduleMealCandidateFragment smcf = new ScheduleMealCandidateFragment();
                 FragmentTransaction fragmentTransaction;
                 fragmentTransaction = getFragmentManager().beginTransaction();
