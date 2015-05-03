@@ -11,12 +11,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class ScheduleAddMealViewFragment extends Fragment {
 
     public final static String FRAG_RETAIN_TAG = "FRAG_RETAIN";
+    private final static String HISTORY_MODE = "history";
+    private final static String SCHEDULE_MODE = "schedule";
+    private final static String HUNGRY_MODE = "hungry";
 
     // retained fragment
     RetainedFragment retainFrag;
@@ -27,6 +31,7 @@ public class ScheduleAddMealViewFragment extends Fragment {
 
     // UI Elements
     EditText cals;
+    EditText carbs;
     EditText protein;
     EditText fat;
     EditText fiber;
@@ -55,6 +60,7 @@ public class ScheduleAddMealViewFragment extends Fragment {
 
         // get UI elements
         cals = (EditText) view.findViewById(R.id.scheduleAddMealEditCalories);
+        carbs = (EditText) view.findViewById(R.id.scheduleAddMealEditCarbs);
         protein = (EditText) view.findViewById(R.id.scheduleAddMealEditProtein);
         fat = (EditText) view.findViewById(R.id.scheduleAddMealEditFat);
         fiber = (EditText) view.findViewById(R.id.scheduleAddMealEditFiber);
@@ -104,18 +110,22 @@ public class ScheduleAddMealViewFragment extends Fragment {
                 if (turner.isChecked()) {
                     halls.add("Turner");
                 }
-                /*MMResultSet rs = foodDB.search(cals.getText().toString(),
+                MMResultSet rs = foodDB.search(cals.getText().toString(), carbs.getText().toString(),
                         protein.getText().toString(), fat.getText().toString(),
                         fiber.getText().toString(), sodium.getText().toString(),
                         halls);
 
-                retainFrag.setResultSet(rs);*/
-
-                ScheduleMealCandidateFragment smcf = new ScheduleMealCandidateFragment();
-                FragmentTransaction fragmentTransaction;
-                fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.mainScrollView, smcf, "SCHEDULEMEALCANDIDATEFRAGMENT");
-                fragmentTransaction.addToBackStack("SCHEDULEMEALCANDIDATEFRAGMENT").commit();
+                if(rs.getNumResults() > 0) {
+                    retainFrag.setResultSet(rs);
+                    ScheduleMealCandidateFragment smcf = new ScheduleMealCandidateFragment();
+                    FragmentTransaction fragmentTransaction;
+                    fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.mainScrollView, smcf, "SCHEDULEMEALCANDIDATEFRAGMENT");
+                    fragmentTransaction.addToBackStack("SCHEDULEMEALCANDIDATEFRAGMENT").commit();
+                } else {
+                    Toast.makeText(getActivity(), "Sorry, no food items match your parameters. \n " +
+                            "Please adjust your parameters and try again", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -124,6 +134,7 @@ public class ScheduleAddMealViewFragment extends Fragment {
         Setting set = userInfoDB.getUserSetting();
         NutritionCalculator calc = new NutritionCalculator(set);
         cals.setText(calc.getCals());
+        carbs.setText(calc.getCarbs());
         protein.setText(calc.getProtein());
         fat.setText(calc.getFat());
         fiber.setText(calc.getFiber());

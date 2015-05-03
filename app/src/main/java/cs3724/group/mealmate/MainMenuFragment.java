@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 public class MainMenuFragment extends Fragment {
     public final static String FRAG_RETAIN_TAG = "FRAG_RETAIN";
+    private final static String HISTORY_MODE = "history";
+    private final static String SCHEDULE_MODE = "schedule";
+    private final static String HUNGRY_MODE = "hungry";
 
     ImageView imgHungry, imgHistory, imgSchedule, imgSetting;
     RetainedFragment retainFrag;
@@ -76,6 +79,7 @@ public class MainMenuFragment extends Fragment {
     public void OnClick(View v){
         if(v.getId() == imgHungry.getId()){
             //Toast.makeText(getActivity(), "Clicked I'm Hungry", Toast.LENGTH_SHORT).show();
+            retainFrag.setMode(HUNGRY_MODE);
             ScheduleAddMealViewFragment sadmvf = new ScheduleAddMealViewFragment();
             FragmentTransaction fragmentTransaction;
             fragmentTransaction = getFragmentManager().beginTransaction();
@@ -84,6 +88,7 @@ public class MainMenuFragment extends Fragment {
         }
         if(v.getId() == imgHistory.getId()){
             //Toast.makeText(getActivity(), "Clicked History", Toast.LENGTH_SHORT).show();
+            retainFrag.setMode(HISTORY_MODE);
             HistoryViewFragment hsvf = new HistoryViewFragment();
             FragmentTransaction fragmentTransaction;
             fragmentTransaction = getFragmentManager().beginTransaction();
@@ -92,6 +97,7 @@ public class MainMenuFragment extends Fragment {
         }
         if(v.getId() == imgSchedule.getId()){
             //Toast.makeText(getActivity(), "Clicked Schedule", Toast.LENGTH_SHORT).show();
+            retainFrag.setMode(SCHEDULE_MODE);
             ScheduleViewFragment svf = new ScheduleViewFragment();
             FragmentTransaction fragmentTransaction;
             fragmentTransaction = getFragmentManager().beginTransaction();
@@ -113,11 +119,15 @@ public class MainMenuFragment extends Fragment {
             imgHungry.setEnabled(false);
             imgHistory.setEnabled(false);
             imgSchedule.setEnabled(false);
+            Toast.makeText(getActivity(), "Please create your setting before continuing",
+                    Toast.LENGTH_SHORT).show();
         } else {
             if (retainFrag.getUserInfoDB().getUserSetting() == null) {
                 imgHungry.setEnabled(false);
                 imgHistory.setEnabled(false);
                 imgSchedule.setEnabled(false);
+                Toast.makeText(getActivity(), "Please create your setting before continuing",
+                        Toast.LENGTH_SHORT).show();
             } else {
                 imgHungry.setEnabled(true);
                 imgHistory.setEnabled(true);

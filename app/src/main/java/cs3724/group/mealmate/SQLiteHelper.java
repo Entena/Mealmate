@@ -29,10 +29,13 @@ public class SQLiteHelper {
         db.close();
     }
 
-    public MMResultSet search(String cal, String pro, String fat, String fib, String sod, ArrayList<String> halls) {
+    public MMResultSet search(String cal, String carb, String pro, String fat, String fib, String sod, ArrayList<String> halls) {
         StringBuilder query = new StringBuilder("SELECT * FROM foods WHERE");
         if (cal.length() != 0) {
             query.append(" CALS < " + cal + " AND");
+        }
+        if (carb.length() != 0) {
+            query.append(" CARB < " + carb + " AND");
         }
         if (pro.length() != 0) {
             query.append(" PROT > " + pro + " AND");
@@ -47,12 +50,16 @@ public class SQLiteHelper {
             query.append(" SOD < " + sod + " AND");
         }
         for (int i = 0; i < halls.size(); i++) {
-            if(i == 0) {
-                query.append(" (DINING_HALL_ID LIKE '%" + halls.get(i) + "%' OR");
-            } else if (i == (halls.size() - 1)) {
-                query.append(" DINING_HALL_ID LIKE '%" + halls.get(i) + "%')");
+            if(halls.size() == 1) {
+                query.append(" DINING_HALL_ID LIKE '%" + halls.get(i) + "%'");
             } else {
-                query.append(" DINING_HALL_ID LIKE '%" + halls.get(i) + "%' OR");
+                if (i == 0) {
+                    query.append(" (DINING_HALL_ID LIKE '%" + halls.get(i) + "%' OR");
+                } else if (i == (halls.size() - 1)) {
+                    query.append(" DINING_HALL_ID LIKE '%" + halls.get(i) + "%')");
+                } else {
+                    query.append(" DINING_HALL_ID LIKE '%" + halls.get(i) + "%' OR");
+                }
             }
 
         }
@@ -61,6 +68,8 @@ public class SQLiteHelper {
         if (queryStr.endsWith("AND")) {
             queryStr = queryStr.substring(0, (size - 4));
         }
+
+        System.out.println(queryStr);
         MMResultSet rs = new MMResultSet(db.rawQuery(queryStr, null));
         return rs;
     }

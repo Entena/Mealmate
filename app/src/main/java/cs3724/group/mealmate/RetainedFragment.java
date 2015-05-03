@@ -10,6 +10,7 @@ public class RetainedFragment extends Fragment {
     SQLiteHelper foodDB;          // the food DB
     DatabaseHandler userInfoDB;     // the user information DB
     MMResultSet resultSet;               // store a result set for use across screens
+    private String mode;
 
     public RetainedFragment() {
         // Required empty public constructor
@@ -49,5 +50,13 @@ public class RetainedFragment extends Fragment {
 
     public MMResultSet getLastResultSet() {
         return resultSet;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public String getMode() {
+        return mode;
     }
 }

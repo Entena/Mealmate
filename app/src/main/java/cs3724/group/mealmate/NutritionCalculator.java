@@ -7,14 +7,16 @@ package cs3724.group.mealmate;
 public class NutritionCalculator {
     // constants
     private static final double RECOMMENDED_SODIUM = 2300.0;
+    private static final double CARB_PERCENT = .17;
     private static final double PRO_PERCENT = .03;
     private static final double FAT_PERCENT = .0325;
     private static final double FIB_PERCENT = .014;
-    private static final double ACTIVITY_MULT = 1.5;
+    private static final double ACTIVITY_MULT = 1.3;
     private static final double MEAL_DIVIDER = 3.5;
 
     // nutritional items
     int cals;
+    int carbs;
     int protein;
     int fat;
     int fiber;
@@ -53,12 +55,15 @@ public class NutritionCalculator {
         double bmr = sexMult + (weightDbl * weightMult) + (heightDbl * heightMult) - (ageDbl * ageMult);
         double caloricIntake = bmr * ACTIVITY_MULT;
 
+        carbs = round((caloricIntake * CARB_PERCENT) / MEAL_DIVIDER);
         protein = round((caloricIntake * PRO_PERCENT) / MEAL_DIVIDER);
         fat = round((caloricIntake * FAT_PERCENT) / MEAL_DIVIDER);
         fiber = round((caloricIntake * FIB_PERCENT) / MEAL_DIVIDER);
         sodium = round(RECOMMENDED_SODIUM / MEAL_DIVIDER);
         cals = round(caloricIntake / MEAL_DIVIDER);
     }
+
+    public String getCarbs() { return Integer.toString(carbs); }
 
     public String getProtein() {
         return Integer.toString(protein);

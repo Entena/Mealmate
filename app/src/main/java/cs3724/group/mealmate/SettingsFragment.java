@@ -78,7 +78,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             height.setText(set.getHeight());
             weight.setText(set.getWeight());
             reminder.setText(set.getReminderTime());
-            System.out.println(set.getReminderTime());
+            //System.out.println(set.getReminderTime());
             if (set.isPebbleConnected()) {
                 usePebble.setChecked(true);
             }
@@ -106,8 +106,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
                 // insert setting into DB
                 userInfoDB.addSetting(newSetting);
-                System.out.println(ageStr + sexStr + heightStr + weightStr + reminderStr + ".");
-                System.out.println(newSetting.getReminderTime());
+                //System.out.println(ageStr + sexStr + heightStr + weightStr + reminderStr + ".");
+                //System.out.println(newSetting.getReminderTime());
+                Toast.makeText(getActivity(), "Setting saved", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getActivity().getBaseContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show();
             }

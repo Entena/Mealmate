@@ -62,16 +62,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         try {
         String CREATE_HISTORY_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_HISTORY + "("
-                + ID + " INTEGER PRIMARY KEY," + DATE + " TEXT,"
+                + ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + DATE + " TEXT,"
                 + TIME + " TEXT," + FOOD_ID + " INTEGER)";
         db.execSQL(CREATE_HISTORY_TABLE);
 
         String CREATE_GOALS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_GOALS + "("
-                + ID + " INTEGER PRIMARY KEY," + GOAL_ITEM + " TEXT,"
+                + ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + GOAL_ITEM + " TEXT,"
                 + GOAL_METRIC + " TEXT," + GOAL_TIME + " TEXT)";
         db.execSQL(CREATE_GOALS_TABLE);
         String CREATE_SCHEDULE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_SCHEDULE + "("
-                + ID + " INTEGER PRIMARY KEY," + DATE + " TEXT,"
+                + ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + DATE + " TEXT,"
                 + TIME + " TEXT," + FOOD_ID + " INTEGER)";
         db.execSQL(CREATE_SCHEDULE_TABLE);
         String CREATE_SETTINGS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_SETTINGS + "("
@@ -110,8 +110,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(FOOD_ID, item.getFoodID());
 
         // Inserting Row
+       // db.execSQL("INSERT INTO " + TABLE_HISTORY + "(" + DATE + ", " + TIME + ", " + FOOD_ID + ") " +
+          //      "VALUES ('" + item.getDate() + "', '" + item.getTime() + "', '" + item.getFoodID() + "');");
         db.insert(TABLE_HISTORY, null, values);
-        db.close(); // Closing database connection
+        //db.close(); // Closing database connection
     }
 
     public void addScheduleItem(CalendarFoodItem item) {
@@ -123,7 +125,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Inserting Row
         db.insert(TABLE_SCHEDULE, null, values);
-        db.close(); // Closing database connection
+        //db.close(); // Closing database connection
     }
 
     public void addSetting(Setting set) {
@@ -161,7 +163,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Inserting Row
         db.insert(TABLE_GOALS, null, values);
-        db.close(); // Closing database connection
+        //db.close(); // Closing database connection
     }
 
     public ArrayList<CalendarFoodItem> getHistory() {
@@ -170,10 +172,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_HISTORY, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            history.add(new CalendarFoodItem(c.getString(0), c.getString(1), c.getString(2)));
+            CalendarFoodItem cfi = new CalendarFoodItem(c.getString(1), c.getString(2), c.getString(3));
+            cfi.setID(c.getString(0));
+            history.add(cfi);
+
+            c.moveToNext();
         }
-        c.close();
-        db.close();
+        //c.close();
+        //db.close();
         return history;
     }
 
@@ -183,10 +189,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_HISTORY + " WHERE " + DATE + " = ?; ", new String[] {date});
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            history.add(new CalendarFoodItem(c.getString(0), c.getString(1), c.getString(2)));
+            CalendarFoodItem cfi = new CalendarFoodItem(c.getString(1), c.getString(2), c.getString(3));
+            cfi.setID(c.getString(0));
+            history.add(cfi);
+            c.moveToNext();
         }
-        c.close();
-        db.close();
+        //c.close();
+        //db.close();
         return history;
     }
 
@@ -196,10 +205,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_SCHEDULE, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            schedule.add(new CalendarFoodItem(c.getString(0), c.getString(1), c.getString(2)));
+            CalendarFoodItem cfi = new CalendarFoodItem(c.getString(1), c.getString(2), c.getString(3));
+            cfi.setID(c.getString(0));
+            schedule.add(cfi);
+            c.moveToNext();
         }
-        c.close();
-        db.close();
+        //c.close();
+        //db.close();
         return schedule;
     }
 
@@ -209,10 +221,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_SCHEDULE + " WHERE " + DATE + " = ?; ", new String[] {date});
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            schedule.add(new CalendarFoodItem(c.getString(0), c.getString(1), c.getString(2)));
+            CalendarFoodItem cfi = new CalendarFoodItem(c.getString(1), c.getString(2), c.getString(3));
+            cfi.setID(c.getString(0));
+            schedule.add(cfi);
+            c.moveToNext();
         }
-        c.close();
-        db.close();
+       // c.close();
+        //db.close();
         return schedule;
     }
 
@@ -222,10 +237,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_GOALS, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            goals.add(new Goal(c.getString(0), c.getString(1), c.getString(2)));
+            goals.add(new Goal(c.getString(1), c.getString(2), c.getString(3)));
+            c.moveToNext();
         }
-        c.close();
-        db.close();
+        //c.close();
+        //db.close();
         return goals;
     }
 
@@ -250,8 +266,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             //System.out.println("TEST " + setting.getReminderTime());
             break;
         }
-        c.close();
+        //c.close();
         //db.close();
         return setting;
+    }
+
+    public void removeHistItem(String id) {
+        db.execSQL("DELETE FROM " + TABLE_HISTORY + " WHERE " + ID + "='" + Integer.parseInt(id) + "';");
+    }
+
+    public void removeSchedItem(String id) {
+        db.execSQL("DELETE FROM " + TABLE_SCHEDULE + " WHERE " + ID + "='" + Integer.parseInt(id) + "';");
     }
 }

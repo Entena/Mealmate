@@ -6,6 +6,7 @@ package cs3724.group.mealmate;
  */
 public class CalendarFoodItem {
 
+    private String id;
     private String date;
     private String time;
     private String food_id;
@@ -14,6 +15,9 @@ public class CalendarFoodItem {
         this.date = date;
         this.time = time;
         this.food_id = food_id;
+    }
+    public void setID(String id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -25,4 +29,5 @@ public class CalendarFoodItem {
     public String getFoodID() {
         return food_id;
     }
+    public String getID() { return id; }
 }

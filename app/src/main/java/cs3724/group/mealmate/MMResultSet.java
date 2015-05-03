@@ -90,4 +90,12 @@ public class MMResultSet {
     public boolean hasNext() {
         return !cursor.isAfterLast();
     }
+
+    public int getNumResults() {
+        return cursor.getCount();
+    }
+
+    public void moveTo(int pos) {
+        cursor.moveToPosition(pos);
+    }
 }
