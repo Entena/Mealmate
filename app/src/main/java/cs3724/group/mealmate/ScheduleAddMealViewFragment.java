@@ -43,6 +43,7 @@ public class ScheduleAddMealViewFragment extends Fragment {
     CheckBox westEnd;
     CheckBox deets;
     private Button btnAddMealGo;
+    private Button btnAddMealMap;
 
     public ScheduleAddMealViewFragment() {
         // Required empty public constructor
@@ -84,6 +85,7 @@ public class ScheduleAddMealViewFragment extends Fragment {
 
     private void setGlobals(View view){
        btnAddMealGo = (Button) view.findViewById(R.id.btnScheduleAddMealGo);
+       btnAddMealMap = (Button) view.findViewById(R.id.btnScheduleAddMealMap);
     }
 
     private void setListeners(){
@@ -126,6 +128,17 @@ public class ScheduleAddMealViewFragment extends Fragment {
                     Toast.makeText(getActivity(), "Sorry, no food items match your parameters. \n " +
                             "Please adjust your parameters and try again", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btnAddMealMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapFragment mf = new MapFragment();
+                FragmentTransaction fragmentTransaction;
+                fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mainScrollView, mf, "MAPFRAGMENT");
+                fragmentTransaction.addToBackStack("MAPFRAGMENT").commit();
             }
         });
     }
