@@ -134,7 +134,7 @@ public class ScheduleAddMealViewFragment extends Fragment {
         btnAddMealMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MapFragment mf = new MapFragment();
+                MapFrag mf = new MapFrag();
                 FragmentTransaction fragmentTransaction;
                 fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.mainScrollView, mf, "MAPFRAGMENT");
