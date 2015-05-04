@@ -26,6 +26,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Locale;
 
 public class ScheduleViewFragment extends Fragment {
@@ -199,7 +200,9 @@ public class ScheduleViewFragment extends Fragment {
             }
             schedule = userInfoDB.getSchedule(dates);
         }
-        //ArrayList<CalendarFoodItem> schedule = userInfoDB.getSchedule();
+        //sort schedule
+        Collections.sort(schedule);
+
         int count = 0;
         ArrayList<HistoryScheduleDisplayItem> food = new ArrayList<HistoryScheduleDisplayItem>(schedule.size());
         Log.e("HIST", "" + schedule.size());

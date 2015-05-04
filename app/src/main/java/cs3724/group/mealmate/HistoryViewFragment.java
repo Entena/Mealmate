@@ -27,6 +27,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -193,7 +194,9 @@ public class HistoryViewFragment extends Fragment {
             }
             history = userInfoDB.getHistory(dates);
         }
-        //ArrayList<CalendarFoodItem> history = userInfoDB.getHistory();
+        //sort history
+        Collections.sort(history);
+
         int count = 0;
         ArrayList<HistoryScheduleDisplayItem> food = new ArrayList<HistoryScheduleDisplayItem>(history.size());
         Log.e("HIST", "" + history.size());
