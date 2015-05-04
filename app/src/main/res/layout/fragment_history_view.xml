@@ -23,10 +23,11 @@
 
     <Spinner
         android:layout_width="match_parent"
-        android:entries="@array/days"
+        android:entries="@array/duration"
         android:layout_height="wrap_content"
         android:layout_weight=".004"
-        android:id="@+id/spinnerHistoryDayOfWeek" />
+        android:id="@+id/spinnerHistoryDuration" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

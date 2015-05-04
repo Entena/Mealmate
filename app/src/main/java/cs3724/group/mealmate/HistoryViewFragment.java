@@ -15,9 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class HistoryViewFragment extends Fragment {
     public final static String FRAG_RETAIN_TAG = "FRAG_RETAIN";
@@ -36,6 +41,7 @@ public class HistoryViewFragment extends Fragment {
     private Button btnAddMeal;
     private Button btnGoals;
     private Button btnRemove;
+    private Spinner spinnerDuration;
 
     public HistoryViewFragment() {
         // Required empty public constructor
@@ -49,6 +55,7 @@ public class HistoryViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_history_view, container, false);
         setGlobals(view);
         setListeners();
+        populateUI();
         return view;
     }
 
@@ -56,6 +63,7 @@ public class HistoryViewFragment extends Fragment {
         btnAddMeal = (Button) view.findViewById(R.id.btnHistoryAddMeal);
         btnGoals = (Button) view.findViewById(R.id.btnHistoryGoals);
         btnRemove = (Button) view.findViewById(R.id.btnHistoryRemove);
+        spinnerDuration = (Spinner) view.findViewById(R.id.spinnerHistoryDuration);
         resultsTbl = (ListView) view.findViewById(R.id.historyTable);
         retainFrag = (RetainedFragment) getFragmentManager().findFragmentByTag(FRAG_RETAIN_TAG);
         userInfoDB = retainFrag.getUserInfoDB();
@@ -104,9 +112,51 @@ public class HistoryViewFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+        spinnerDuration.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-        //MMResultSet rs = retainFrag.getLastResultSet();
-        //MMResultSet rs = foodDB.execQuery("SELECT * FROM foods WHERE CALS < 854 AND PROT > 26 AND FAT < 28 AND FIBER > 12 AND SOD < 657 AND DINING_HALL_ID LIKE '%Owens%'");
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+                                       int position, long id) {
+                populateUI();
+                //System.out.println("TEST");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // nothing to do here
+            }
+        });
+    }
+
+    private void populateUI() {
+
+        int numDays;
+        String duration = spinnerDuration.getSelectedItem().toString();
+        //ArrayList<CalendarFoodItem> history;
+        //String selDate = calPicker.getDate.toString();
+        if (duration.equals("Day")) {
+            numDays = 1;
+        } else if (duration.equals("Week")) {
+            numDays = 7;
+        } else {
+            numDays = 30;
+        }
+        if (numDays == 1) {
+            //history = userInfoDB.getHistory(selDate);
+        } else {
+            /*ArrayList<String> dates = new ArrayList<>(30);
+            int day = calPicker.getDay;
+            int month = calPicker.getMonth;
+            int year = calPicker.getYear;
+            Calendar date = new GregorianCalendar(year, month, day);
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            for (int i = 0; i < numDays; i++) {
+                date.add(Calendar.DAY_OF_MONTH, i);
+                dates.add(df.format(date));
+            }
+            history = userInfoDB.getHistory(dates);
+            */
+        }
         ArrayList<CalendarFoodItem> history = userInfoDB.getHistory();
         int count = 0;
         ArrayList<HistoryScheduleDisplayItem> food = new ArrayList<HistoryScheduleDisplayItem>(history.size());

@@ -61,7 +61,6 @@ public class SQLiteHelper {
                     query.append(" DINING_HALL_ID LIKE '%" + halls.get(i) + "%' OR");
                 }
             }
-
         }
         String queryStr = query.toString();
         int size = queryStr.length();

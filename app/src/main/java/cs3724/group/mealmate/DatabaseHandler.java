@@ -199,6 +199,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return history;
     }
 
+    public ArrayList<CalendarFoodItem> getHistory(ArrayList<String> dates) {
+        ArrayList<CalendarFoodItem> history = new ArrayList<>();
+        //SQLiteDatabase db = this.getWritableDatabase();
+        StringBuilder query = new StringBuilder("SELECT * FROM " + TABLE_HISTORY + " WHERE");
+        for (int i = 0; i < dates.size(); i++) {
+            if(dates.size() == 1) {
+                query.append(" " + DATE + " '%" + dates.get(i) + "%'");
+            } else {
+                if (i == 0) {
+                    query.append(" (" + DATE + " '%" + dates.get(i) + "%' OR");
+                } else if (i == (dates.size() - 1)) {
+                    query.append(" " + DATE + " '%" + dates.get(i) + "%')");
+                } else {
+                    query.append(" " + DATE + " '%" + dates.get(i) + "%' OR");
+                }
+            }
+
+        }
+        Cursor c = db.rawQuery(query.toString(), null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            CalendarFoodItem cfi = new CalendarFoodItem(c.getString(1), c.getString(2), c.getString(3));
+            cfi.setID(c.getString(0));
+            history.add(cfi);
+            c.moveToNext();
+        }
+        //c.close();
+        //db.close();
+        return history;
+    }
+
     public ArrayList<CalendarFoodItem> getSchedule() {
         ArrayList<CalendarFoodItem> schedule = new ArrayList<>();
         //SQLiteDatabase db = this.getWritableDatabase();
@@ -227,6 +258,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             c.moveToNext();
         }
        // c.close();
+        //db.close();
+        return schedule;
+    }
+
+    public ArrayList<CalendarFoodItem> getSchedule(ArrayList<String> dates) {
+        ArrayList<CalendarFoodItem> schedule = new ArrayList<>();
+        //SQLiteDatabase db = this.getWritableDatabase();
+        StringBuilder query = new StringBuilder("SELECT * FROM " + TABLE_SCHEDULE + " WHERE");
+        for (int i = 0; i < dates.size(); i++) {
+            if(dates.size() == 1) {
+                query.append(" " + DATE + " '%" + dates.get(i) + "%'");
+            } else {
+                if (i == 0) {
+                    query.append(" (" + DATE + " '%" + dates.get(i) + "%' OR");
+                } else if (i == (dates.size() - 1)) {
+                    query.append(" " + DATE + " '%" + dates.get(i) + "%')");
+                } else {
+                    query.append(" " + DATE + " '%" + dates.get(i) + "%' OR");
+                }
+            }
+
+        }
+        Cursor c = db.rawQuery(query.toString(), null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            CalendarFoodItem cfi = new CalendarFoodItem(c.getString(1), c.getString(2), c.getString(3));
+            cfi.setID(c.getString(0));
+            schedule.add(cfi);
+            c.moveToNext();
+        }
+        //c.close();
         //db.close();
         return schedule;
     }

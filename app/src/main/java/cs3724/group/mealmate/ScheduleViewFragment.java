@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class ScheduleViewFragment extends Fragment {
     private ListView resultsTbl;
     private Button btnAddMeal;
     private Button btnRemove;
+    private Spinner spinnerDuration;
 
     public ScheduleViewFragment() {
         // Required empty public constructor
@@ -48,12 +50,14 @@ public class ScheduleViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_schedule_view, container, false);
         setGlobals(view);
         setListeners();
+        populateUI();
         return view;
     }
 
     private void setGlobals(View view) {
         btnAddMeal = (Button) view.findViewById(R.id.btnScheduleAddMeal);
         btnRemove = (Button) view.findViewById(R.id.btnScheduleRemove);
+        spinnerDuration = (Spinner) view.findViewById(R.id.spinnerScheduleDuration);
         resultsTbl = (ListView) view.findViewById(R.id.scheduleTable);
         retainFrag = (RetainedFragment) getFragmentManager().findFragmentByTag(FRAG_RETAIN_TAG);
         userInfoDB = retainFrag.getUserInfoDB();
@@ -93,9 +97,50 @@ public class ScheduleViewFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+        spinnerDuration.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-        //MMResultSet rs = retainFrag.getLastResultSet();
-        //MMResultSet rs = foodDB.execQuery("SELECT * FROM foods WHERE CALS < 854 AND PROT > 26 AND FAT < 28 AND FIBER > 12 AND SOD < 657 AND DINING_HALL_ID LIKE '%Owens%'");
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+                                       int position, long id) {
+                populateUI();
+                //System.out.println("TEST");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // nothing to do here
+            }
+        });
+    }
+
+    private void populateUI() {
+        int numDays;
+        String duration = spinnerDuration.getSelectedItem().toString();
+        //ArrayList<CalendarFoodItem> schedule;
+        //String selDate = calPicker.getDate.toString();
+        if (duration.equals("Day")) {
+            numDays = 1;
+        } else if (duration.equals("Week")) {
+            numDays = 7;
+        } else {
+            numDays = 30;
+        }
+        if (numDays == 1) {
+            //schedule = userInfoDB.getHistory(selDate);
+        } else {
+            /*ArrayList<String> dates = new ArrayList<>(30);
+            int day = calPicker.getDay;
+            int month = calPicker.getMonth;
+            int year = calPicker.getYear;
+            Calendar date = new GregorianCalendar(year, month, day);
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            for (int i = 0; i < numDays; i++) {
+                date.add(Calendar.DAY_OF_MONTH, i);
+                dates.add(df.format(date));
+            }
+            schedule = userInfoDB.getHistory(dates);
+            */
+        }
         ArrayList<CalendarFoodItem> schedule = userInfoDB.getSchedule();
         int count = 0;
         ArrayList<HistoryScheduleDisplayItem> food = new ArrayList<HistoryScheduleDisplayItem>(schedule.size());
