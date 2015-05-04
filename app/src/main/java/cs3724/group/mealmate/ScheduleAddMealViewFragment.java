@@ -83,50 +83,62 @@ public class ScheduleAddMealViewFragment extends Fragment {
         return view;
     }
 
-    private void setGlobals(View view){
-       btnAddMealGo = (Button) view.findViewById(R.id.btnScheduleAddMealGo);
-       btnAddMealMap = (Button) view.findViewById(R.id.btnScheduleAddMealMap);
+    private void setGlobals(View view) {
+        btnAddMealGo = (Button) view.findViewById(R.id.btnScheduleAddMealGo);
+        btnAddMealMap = (Button) view.findViewById(R.id.btnScheduleAddMealMap);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         btnAddMealGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> halls = new ArrayList<>();
+                String calStr = cals.getText().toString();
+                String carbStr = carbs.getText().toString();
+                String proStr = protein.getText().toString();
+                String fatStr = fat.getText().toString();
+                String fibStr = fiber.getText().toString();
+                String sodStr = sodium.getText().toString();
 
-                if (owensHG.isChecked()) {
-                    halls.add("Owens");
-                }
-                if (b37.isChecked()) {
-                    halls.add("b37");
-                }
-                if (d2dx.isChecked()) {
-                    halls.add("D2");
-                }
-                if (deets.isChecked()) {
-                    halls.add("Deets");
-                }
-                if (westEnd.isChecked()) {
-                    halls.add("West End");
-                }
-                if (turner.isChecked()) {
-                    halls.add("Turner");
-                }
-                MMResultSet rs = foodDB.search(cals.getText().toString(), carbs.getText().toString(),
-                        protein.getText().toString(), fat.getText().toString(),
-                        fiber.getText().toString(), sodium.getText().toString(),
-                        halls);
-
-                if(rs.getNumResults() > 0) {
-                    retainFrag.setResultSet(rs);
-                    ScheduleMealCandidateFragment smcf = new ScheduleMealCandidateFragment();
-                    FragmentTransaction fragmentTransaction;
-                    fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.mainScrollView, smcf, "SCHEDULEMEALCANDIDATEFRAGMENT");
-                    fragmentTransaction.addToBackStack("SCHEDULEMEALCANDIDATEFRAGMENT").commit();
+                if (calStr.length() == 0 || carbStr.length() == 0 || proStr.length() == 0 ||
+                        fatStr.length() == 0 || fibStr.length() == 0 || sodStr.length() == 0) {
+                        Toast.makeText(getActivity(), "Please fill out all the fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), "Sorry, no food items match your parameters. \n " +
-                            "Please adjust your parameters and try again", Toast.LENGTH_SHORT).show();
+                    ArrayList<String> halls = new ArrayList<>();
+
+                    if (owensHG.isChecked()) {
+                        halls.add("Owens");
+                    }
+                    if (b37.isChecked()) {
+                        halls.add("b37");
+                    }
+                    if (d2dx.isChecked()) {
+                        halls.add("D2");
+                    }
+                    if (deets.isChecked()) {
+                        halls.add("Deets");
+                    }
+                    if (westEnd.isChecked()) {
+                        halls.add("West End");
+                    }
+                    if (turner.isChecked()) {
+                        halls.add("Turner");
+                    }
+                    MMResultSet rs = foodDB.search(cals.getText().toString(), carbs.getText().toString(),
+                            protein.getText().toString(), fat.getText().toString(),
+                            fiber.getText().toString(), sodium.getText().toString(),
+                            halls);
+
+                    if (rs.getNumResults() > 0) {
+                        retainFrag.setResultSet(rs);
+                        ScheduleMealCandidateFragment smcf = new ScheduleMealCandidateFragment();
+                        FragmentTransaction fragmentTransaction;
+                        fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.mainScrollView, smcf, "SCHEDULEMEALCANDIDATEFRAGMENT");
+                        fragmentTransaction.addToBackStack("SCHEDULEMEALCANDIDATEFRAGMENT").commit();
+                    } else {
+                        Toast.makeText(getActivity(), "Sorry, no food items match your parameters. \n " +
+                                "Please adjust your parameters and try again", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

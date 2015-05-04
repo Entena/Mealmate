@@ -20,4 +20,27 @@
         <item>Week</item>
         <item>Month</item>
     </string-array>
+    <string-array name="durationAddGoal">
+        <item>per day</item>
+        <item>per week</item>
+        <item>per month</item>
+    </string-array>
+    <string-array name="durationGoal">
+        <item>Past Day</item>
+        <item>Past Week</item>
+        <item>Past Month</item>
+    </string-array>
+
+    <string-array name="nutrItems">
+        <item>Calories</item>
+        <item>Carbs</item>
+        <item>Protein</item>
+        <item>Fat</item>
+        <item>Fiber</item>
+        <item>Sodium</item>
+    </string-array>
+    <string-array name="operators">
+        <item>Less than</item>
+        <item>At least</item>
+    </string-array>
 </resources>

@@ -109,7 +109,7 @@ public class HistoryViewFragment extends Fragment {
         //MMResultSet rs = foodDB.execQuery("SELECT * FROM foods WHERE CALS < 854 AND PROT > 26 AND FAT < 28 AND FIBER > 12 AND SOD < 657 AND DINING_HALL_ID LIKE '%Owens%'");
         ArrayList<CalendarFoodItem> history = userInfoDB.getHistory();
         int count = 0;
-        final ArrayList<HistoryScheduleDisplayItem> food = new ArrayList<HistoryScheduleDisplayItem>(history.size());
+        ArrayList<HistoryScheduleDisplayItem> food = new ArrayList<HistoryScheduleDisplayItem>(history.size());
         Log.e("HIST", "" + history.size());
         for (
                 CalendarFoodItem cfi

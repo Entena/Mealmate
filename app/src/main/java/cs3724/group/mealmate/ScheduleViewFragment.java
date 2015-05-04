@@ -98,7 +98,7 @@ public class ScheduleViewFragment extends Fragment {
         //MMResultSet rs = foodDB.execQuery("SELECT * FROM foods WHERE CALS < 854 AND PROT > 26 AND FAT < 28 AND FIBER > 12 AND SOD < 657 AND DINING_HALL_ID LIKE '%Owens%'");
         ArrayList<CalendarFoodItem> schedule = userInfoDB.getSchedule();
         int count = 0;
-        final ArrayList<HistoryScheduleDisplayItem> food = new ArrayList<HistoryScheduleDisplayItem>(schedule.size());
+        ArrayList<HistoryScheduleDisplayItem> food = new ArrayList<HistoryScheduleDisplayItem>(schedule.size());
         Log.e("HIST", "" + schedule.size());
         for (CalendarFoodItem cfi : schedule)
 

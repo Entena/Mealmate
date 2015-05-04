@@ -237,7 +237,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_GOALS, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            goals.add(new Goal(c.getString(1), c.getString(2), c.getString(3)));
+            Goal g = new Goal(c.getString(1), c.getString(2), c.getString(3));
+            g.setID(c.getString(0));
+            goals.add(g);
             c.moveToNext();
         }
         //c.close();
@@ -277,5 +279,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void removeSchedItem(String id) {
         db.execSQL("DELETE FROM " + TABLE_SCHEDULE + " WHERE " + ID + "='" + Integer.parseInt(id) + "';");
+    }
+
+    public void removeGoal(String id) {
+        db.execSQL("DELETE FROM " + TABLE_GOALS + " WHERE " + ID + "='" + Integer.parseInt(id) + "';");
     }
 }

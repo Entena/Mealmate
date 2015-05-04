@@ -58,5 +58,6 @@
             android:layout_height="wrap_content"
             android:text="Add Meal"
             android:id="@+id/btnScheduleAddMeal" />
+
     </LinearLayout>
 </LinearLayout>

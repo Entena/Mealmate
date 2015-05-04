@@ -7,6 +7,7 @@ public class Goal {
     String goalItem;
     String goalMetric;
     String goalTime;
+    String id;
 
     public Goal(String goalItem, String goalMetric, String goalTime) {
         this.goalItem = goalItem;
@@ -23,4 +24,12 @@ public class Goal {
     }
 
     public String getGoalTime() {return goalTime; }
+
+    public String getID() {
+        return id;
+    }
+
+    public void setID(String id) {
+        this.id = id;
+    }
 }

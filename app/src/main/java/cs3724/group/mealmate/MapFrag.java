@@ -45,13 +45,13 @@ public class MapFrag extends Fragment {
             e.printStackTrace();
         }
         map.setMyLocationEnabled(true);
-        CameraUpdate camera = CameraUpdateFactory.newLatLngZoom(new LatLng(37.228350, -80.422172), 17);
-        map.animateCamera(camera);
+        CameraUpdate camera = CameraUpdateFactory.newLatLngZoom(new LatLng(37.228350, -80.422172), 15);
+        map.moveCamera(camera);
 
         /* ADD DINING HALL MARKERS TO MAP */
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(37.226689, -80.418887))
-                .title("Owens"));
+                .title("Owens/Hokie Grill"));
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(37.229234, -80.418243))
                 .title("Burger 37"));
@@ -60,7 +60,7 @@ public class MapFrag extends Fragment {
                 .title("Deets Place"));
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(37.224561, -80.421140))
-                .title("D2"));
+                .title("D2/DX"));
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(37.223288, -80.421988))
                 .title("West End Market"));

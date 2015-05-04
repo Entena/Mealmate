@@ -88,8 +88,9 @@ public class ScheduleMealCandidateFragment extends Fragment {
             }
             Random rand = new Random();
             for(int i = 0; i < size; i++) {
-                boolean check = false;
+                boolean check;
                 while(true) {
+                    check = false;
                     int pos = rand.nextInt(rs.getNumResults());
                     for (int j = 0; j < i; j++) {
                         if(indexes[j] == pos) {
@@ -100,7 +101,7 @@ public class ScheduleMealCandidateFragment extends Fragment {
                         indexes[i] = pos;
                         break;
                     }
-                    System.out.println("TEST");
+                    //System.out.println("TESTWHILE");
                 }
             }
             for (int i = 0; i < size; i++) {
