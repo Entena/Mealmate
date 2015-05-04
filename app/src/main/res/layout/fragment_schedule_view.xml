@@ -14,11 +14,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Schedule" />
 
-    <Spinner
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".004"
-        android:id="@+id/spinnerScheduleDay" />
+        android:id="@+id/editTextScheduleDay" />
 
 
     <Spinner
@@ -51,6 +51,13 @@
             android:layout_height="wrap_content"
             android:text="Remove"
             android:id="@+id/btnScheduleRemove" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight=".01"
+            android:layout_height="wrap_content"
+            android:text="To History"
+            android:id="@+id/btnScheduleAddHistoryMeal" />
 
         <Button
             android:layout_width="match_parent"

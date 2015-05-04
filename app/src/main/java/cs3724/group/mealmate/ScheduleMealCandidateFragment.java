@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -103,20 +104,24 @@ public class ScheduleMealCandidateFragment extends Fragment {
                 OnClick(v);
             }
         });
-        date.setOnClickListener(new View.OnClickListener() {
+        date.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if (v == date) {
+            public boolean onTouch(View v, MotionEvent e) {
+                if (v == date && e.getAction() == MotionEvent.ACTION_UP) {
                     dateDialog.show();
+                    return true;
                 }
+                return false;
             }
         });
-        time.setOnClickListener(new View.OnClickListener() {
+        time.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if (v == time) {
+            public boolean onTouch(View v, MotionEvent e) {
+                if (v == time && e.getAction() == MotionEvent.ACTION_UP) {
                     timeDialog.show();
+                    return true;
                 }
+                return false;
             }
         });
     }
@@ -297,6 +302,7 @@ public class ScheduleMealCandidateFragment extends Fragment {
             }
 
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        dateDialog.getDatePicker().setCalendarViewShown(true);
     }
 
     private void setTimeField() {

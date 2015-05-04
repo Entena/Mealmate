@@ -14,11 +14,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="History" />
 
-    <Spinner
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".004"
-        android:id="@+id/spinnerHistoryDay" />
+        android:id="@+id/editTextHistoryDay" />
 
 
     <Spinner

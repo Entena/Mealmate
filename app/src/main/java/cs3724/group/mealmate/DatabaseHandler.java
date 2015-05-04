@@ -143,7 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //System.out.println("TEST " + set.getReminderTime());
         values.put(REMINDER, set.getReminderTime());
         String pebCon;
-        if (set.isPebbleConnected()) {
+        if (set.usePebble()) {
             pebCon = "true";
         } else {
             pebCon = "false";
@@ -205,18 +205,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         StringBuilder query = new StringBuilder("SELECT * FROM " + TABLE_HISTORY + " WHERE");
         for (int i = 0; i < dates.size(); i++) {
             if(dates.size() == 1) {
-                query.append(" " + DATE + " '%" + dates.get(i) + "%'");
+                query.append(" " + DATE + " LIKE '%" + dates.get(i) + "%'");
             } else {
                 if (i == 0) {
-                    query.append(" (" + DATE + " '%" + dates.get(i) + "%' OR");
+                    query.append(" (" + DATE + " LIKE '%" + dates.get(i) + "%' OR");
                 } else if (i == (dates.size() - 1)) {
-                    query.append(" " + DATE + " '%" + dates.get(i) + "%')");
+                    query.append(" " + DATE + " LIKE '%" + dates.get(i) + "%')");
                 } else {
-                    query.append(" " + DATE + " '%" + dates.get(i) + "%' OR");
+                    query.append(" " + DATE + " LIKE '%" + dates.get(i) + "%' OR");
                 }
             }
 
         }
+        System.out.println(query.toString());
         Cursor c = db.rawQuery(query.toString(), null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
@@ -268,14 +269,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         StringBuilder query = new StringBuilder("SELECT * FROM " + TABLE_SCHEDULE + " WHERE");
         for (int i = 0; i < dates.size(); i++) {
             if(dates.size() == 1) {
-                query.append(" " + DATE + " '%" + dates.get(i) + "%'");
+                query.append(" " + DATE + " LIKE '%" + dates.get(i) + "%'");
             } else {
                 if (i == 0) {
-                    query.append(" (" + DATE + " '%" + dates.get(i) + "%' OR");
+                    query.append(" (" + DATE + " LIKE '%" + dates.get(i) + "%' OR");
                 } else if (i == (dates.size() - 1)) {
-                    query.append(" " + DATE + " '%" + dates.get(i) + "%')");
+                    query.append(" " + DATE + " LIKE '%" + dates.get(i) + "%')");
                 } else {
-                    query.append(" " + DATE + " '%" + dates.get(i) + "%' OR");
+                    query.append(" " + DATE + " LIKE '%" + dates.get(i) + "%' OR");
                 }
             }
 

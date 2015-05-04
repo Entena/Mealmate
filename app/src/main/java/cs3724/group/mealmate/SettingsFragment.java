@@ -79,7 +79,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             weight.setText(set.getWeight());
             reminder.setText(set.getReminderTime());
             //System.out.println(set.getReminderTime());
-            if (set.isPebbleConnected()) {
+            if (set.usePebble()) {
                 usePebble.setChecked(true);
             }
         }

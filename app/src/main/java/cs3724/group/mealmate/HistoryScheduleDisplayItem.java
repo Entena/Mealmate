@@ -4,10 +4,10 @@ package cs3724.group.mealmate;
  * Created by Pat on 5/2/2015.
  */
 public class HistoryScheduleDisplayItem {
-    public String name, cal, carbs, protein, fat, fiber, sodium, diningHall, date, time, id;
+    public String name, cal, carbs, protein, fat, fiber, sodium, diningHall, date, time, id, food_id;
 
     public HistoryScheduleDisplayItem(String name, String diningHall, String cal, String carbs, String protein, String fat,
-                                      String fiber, String sodium, String date, String time, String id) {
+                                      String fiber, String sodium, String date, String time, String id, String food_id) {
         this.name = name;
         this.diningHall = diningHall;
         this.cal = cal;
@@ -19,6 +19,7 @@ public class HistoryScheduleDisplayItem {
         this.date = date;
         this.time = time;
         this.id = id;
+        this.food_id = food_id;
     }
 
     public String toString() {

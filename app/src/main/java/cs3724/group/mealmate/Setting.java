@@ -35,7 +35,7 @@ public class Setting {
         return weight;
     }
     public String getReminderTime() { return reminderTime; }
-    public boolean isPebbleConnected() {return pebbleConnected; }
+    public boolean usePebble() {return pebbleConnected; }
 
     public void setPebbleConnected(boolean pebCon) {
         pebbleConnected = pebCon;

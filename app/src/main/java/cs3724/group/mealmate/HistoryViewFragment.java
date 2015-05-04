@@ -2,27 +2,33 @@ package cs3724.group.mealmate;
 
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.graphics.Color;
-import android.os.Bundle;
+import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class HistoryViewFragment extends Fragment {
     public final static String FRAG_RETAIN_TAG = "FRAG_RETAIN";
@@ -36,12 +42,18 @@ public class HistoryViewFragment extends Fragment {
     // DBs
     private SQLiteHelper foodDB;
     private DatabaseHandler userInfoDB;
+
+    private Calendar calendar;
+    private DatePickerDialog dateDialog;
+    private SimpleDateFormat dateFormat;
+
     // UI Elements
     private ListView resultsTbl;
     private Button btnAddMeal;
     private Button btnGoals;
     private Button btnRemove;
     private Spinner spinnerDuration;
+    private EditText date;
 
     public HistoryViewFragment() {
         // Required empty public constructor
@@ -55,7 +67,7 @@ public class HistoryViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_history_view, container, false);
         setGlobals(view);
         setListeners();
-        populateUI();
+        //populateUI();
         return view;
     }
 
@@ -69,6 +81,16 @@ public class HistoryViewFragment extends Fragment {
         userInfoDB = retainFrag.getUserInfoDB();
         foodDB = retainFrag.getFoodDB();
         selectedMeals = new ArrayList<HistoryScheduleDisplayItem>();
+
+        date = (EditText) view.findViewById(R.id.editTextHistoryDay);
+        date.setInputType(InputType.TYPE_NULL);
+
+
+        //Set up calendar
+        calendar = Calendar.getInstance();
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        setDateField();
+        initDate();
     }
 
     private void setListeners() {
@@ -126,14 +148,23 @@ public class HistoryViewFragment extends Fragment {
                 // nothing to do here
             }
         });
+        date.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent e) {
+                if (v == date && e.getAction() == MotionEvent.ACTION_UP) {
+                    dateDialog.show();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void populateUI() {
-
         int numDays;
         String duration = spinnerDuration.getSelectedItem().toString();
-        //ArrayList<CalendarFoodItem> history;
-        //String selDate = calPicker.getDate.toString();
+        ArrayList<CalendarFoodItem> history;
+        String selDate = date.getText().toString();
         if (duration.equals("Day")) {
             numDays = 1;
         } else if (duration.equals("Week")) {
@@ -142,22 +173,27 @@ public class HistoryViewFragment extends Fragment {
             numDays = 30;
         }
         if (numDays == 1) {
-            //history = userInfoDB.getHistory(selDate);
+            history = userInfoDB.getHistory(selDate);
         } else {
-            /*ArrayList<String> dates = new ArrayList<>(30);
-            int day = calPicker.getDay;
-            int month = calPicker.getMonth;
-            int year = calPicker.getYear;
-            Calendar date = new GregorianCalendar(year, month, day);
+            ArrayList<String> dates = new ArrayList<>(30);
+            String[] dateAr = selDate.split("/");
+            int day = Integer.parseInt(dateAr[1]);
+            int month = Integer.parseInt(dateAr[0]) - 1;
+            int year = Integer.parseInt(dateAr[2]);
+            //Toast.makeText(getActivity(), Integer.toString(month), Toast.LENGTH_SHORT).show();
+            Calendar cal = Calendar.getInstance();
+            cal.set(year, month, day);
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             for (int i = 0; i < numDays; i++) {
-                date.add(Calendar.DAY_OF_MONTH, i);
-                dates.add(df.format(date));
+                if(i != 0) {
+                    cal.add(Calendar.DAY_OF_MONTH, 1);
+                }
+                //Toast.makeText(getActivity(), df.format(cal.getTime()), Toast.LENGTH_SHORT).show();
+                dates.add(df.format(cal.getTime()));
             }
             history = userInfoDB.getHistory(dates);
-            */
         }
-        ArrayList<CalendarFoodItem> history = userInfoDB.getHistory();
+        //ArrayList<CalendarFoodItem> history = userInfoDB.getHistory();
         int count = 0;
         ArrayList<HistoryScheduleDisplayItem> food = new ArrayList<HistoryScheduleDisplayItem>(history.size());
         Log.e("HIST", "" + history.size());
@@ -170,7 +206,7 @@ public class HistoryViewFragment extends Fragment {
             HistoryScheduleDisplayItem item = new HistoryScheduleDisplayItem(rs.getFoodName(),
                     rs.getDiningHall(), round(rs.getCalories()), round(rs.getCarbs()), round(rs.getProtein()),
                     round(rs.getFat()), round(rs.getFiber()), round(rs.getSodium()),
-                    cfi.getDate(), cfi.getTime(), cfi.getID());
+                    cfi.getDate(), cfi.getTime(), cfi.getID(), rs.getFoodID());
             //food.add(rs.getFoodName()+"\n"+rs.getDiningHall()+"\n"+"Cal:"+rs.getCalories()+" P:"+rs.getProtein()+" Ft:"+rs.getFat()+" Fb:"+rs.getFiber()+" S:"+rs.getSodium());
             food.add(item);
         }
@@ -254,5 +290,24 @@ public class HistoryViewFragment extends Fragment {
         int round = (int) Math.round(d);
         String rStr = Integer.toString(round);
         return rStr;
+    }
+
+    private void setDateField() {
+        dateDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                calendar.set(year, monthOfYear, dayOfMonth);
+
+                date.setText(dateFormat.format(calendar.getTime()));
+                populateUI();
+            }
+
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        dateDialog.getDatePicker().setCalendarViewShown(true);
+    }
+
+    private void initDate() {
+        date.setText(dateFormat.format(calendar.getTime()));
     }
 }

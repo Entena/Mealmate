@@ -26,6 +26,8 @@ import java.util.Date;
 
 public class GoalsViewFragment extends Fragment {
     public final static String FRAG_RETAIN_TAG = "FRAG_RETAIN";
+    public final static String GOAL_MET = "Goal Met!";
+    public final static String GOAL_NOT_MET = "Goal Not Met";
 
     private ArrayList<GoalDisplayItem> selectedMeals;
 
@@ -102,7 +104,7 @@ public class GoalsViewFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
                                        int position, long id) {
                 populateUI();
-                System.out.println("TEST");
+                //System.out.println("TEST");
             }
 
             @Override
@@ -113,6 +115,16 @@ public class GoalsViewFragment extends Fragment {
     }
 
     private void populateUI() {
+        int numDays;
+        ArrayList<CalendarFoodItem> history;
+        if (duration.getSelectedItem().toString().equals("Past Week")) {
+            numDays = 7;
+        } else if (duration.getSelectedItem().toString().equals("Past Month")) {
+            numDays = 30;
+        } else {
+            numDays = 1;
+        }
+
         //get totals
         int cals = 0;
         int carbs = 0;
@@ -120,42 +132,54 @@ public class GoalsViewFragment extends Fragment {
         int fat = 0;
         int fiber = 0;
         int sodium = 0;
+        Calendar cal = Calendar.getInstance();
+        Date today = cal.getTime();
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        String dateStr = df.format(today);
         if(duration.getSelectedItem().toString().equals("Past Day")) {
-            Calendar cal = Calendar.getInstance();
-            Date today = cal.getTime();
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            String dateStr = df.format(today);
             //ArrayList<CalendarFoodItem> history = userInfoDB.getHistory(dateStr);
-            ArrayList<CalendarFoodItem> history = userInfoDB.getHistory();
-            for(CalendarFoodItem cfi : history) {
-                MMResultSet rs = foodDB.execQuery("SELECT * FROM foods WHERE _id=" + cfi.getFoodID());
-                if (!rs.getCalories().equals("NULL")) {
-                    cals += round(rs.getCalories());
+            history = userInfoDB.getHistory(dateStr);
+        } else {
+            ArrayList<String> dates = new ArrayList<>(30);
+            //Toast.makeText(getActivity(), Integer.toString(month), Toast.LENGTH_SHORT).show();
+            for (int i = 0; i < numDays; i++) {
+                if(i != 0) {
+                    cal.add(Calendar.DAY_OF_MONTH, -1);
                 }
-                if (!rs.getCarbs().equals("NULL")) {
-                    carbs += round(rs.getCarbs());
-                }
-                if (!rs.getProtein().equals("NULL")) {
-                    protein += round(rs.getProtein());
-                }
-                if (!rs.getFat().equals("NULL")) {
-                    fat += round(rs.getFat());
-                }
-                if (!rs.getFiber().equals("NULL")) {
-                    fiber += round(rs.getFiber());
-                }
-                if (!rs.getSodium().equals("NULL")) {
-                    sodium += round(rs.getSodium());
-                }
+                //Toast.makeText(getActivity(), df.format(cal.getTime()), Toast.LENGTH_SHORT).show();
+                dates.add(df.format(cal.getTime()));
             }
-            if (history.size() > 0) {
-                tvTotals.setText("History Totals:\n" + "C:" + Integer.toString(cals) + " Cb:" +
-                        Integer.toString(carbs) + " P:" + Integer.toString(protein) + " F:" +
-                        Integer.toString(fat) + " Fb:" + Integer.toString(fiber) + " S:" +
-                        Integer.toString(sodium));
-            } else {
-                tvTotals.setText("No History for this Period");
+            history = userInfoDB.getHistory(dates);
+        }
+
+        for(CalendarFoodItem cfi : history) {
+            MMResultSet rs = foodDB.execQuery("SELECT * FROM foods WHERE _id=" + cfi.getFoodID());
+            if (!rs.getCalories().equals("NULL")) {
+                cals += round(rs.getCalories());
             }
+            if (!rs.getCarbs().equals("NULL")) {
+                carbs += round(rs.getCarbs());
+            }
+            if (!rs.getProtein().equals("NULL")) {
+                protein += round(rs.getProtein());
+            }
+            if (!rs.getFat().equals("NULL")) {
+                fat += round(rs.getFat());
+            }
+            if (!rs.getFiber().equals("NULL")) {
+                fiber += round(rs.getFiber());
+            }
+            if (!rs.getSodium().equals("NULL")) {
+                sodium += round(rs.getSodium());
+            }
+        }
+        if (history.size() > 0) {
+            tvTotals.setText("History Totals:\n" + "C:" + Integer.toString(cals) + " Cb:" +
+                    Integer.toString(carbs) + " P:" + Integer.toString(protein) + " F:" +
+                    Integer.toString(fat) + " Fb:" + Integer.toString(fiber) + " S:" +
+                    Integer.toString(sodium));
+        } else {
+            tvTotals.setText("No History for this Period");
         }
 
         ArrayList<Goal> goals = userInfoDB.getGoals();
@@ -167,17 +191,20 @@ public class GoalsViewFragment extends Fragment {
             String dur = g.getGoalTime();
             String met = g.getGoalMetric();
             String[] metAr = met.split(" ");
+            int metric = Integer.parseInt(metAr[2]);
             if(duration.getSelectedItem().toString().equals("Past Day")) {
                 //System.out.println("DAY");
                 if (g.goalTime.equals("per week")) {
                     int apx = (int) (Double.parseDouble(metAr[2]) / 7);
                     met = metAr[0] + " " + metAr[1] + " ~" + Integer.toString(apx);
                     dur = "per day";
+                    metric = apx;
                 }
                 if (g.goalTime.equals("per month")) {
                     int apx = (int) (Double.parseDouble(metAr[2]) / 30);
                     met = metAr[0] + " " + metAr[1] + " ~" + Integer.toString(apx);
                     dur = "per day";
+                    metric = apx;
                 }
             }
             if(duration.getSelectedItem().toString().equals("Past Week")) {
@@ -185,11 +212,13 @@ public class GoalsViewFragment extends Fragment {
                     int apx = (int) (Double.parseDouble(metAr[2]) * 7);
                     met = metAr[0] + " " + metAr[1] + " ~" + Integer.toString(apx);
                     dur = "per week";
+                    metric = apx;
                 }
                 if (g.goalTime.equals("per month")) {
                     int apx = (int) (Double.parseDouble(metAr[2]) / 4);
                     met = metAr[0] + " " + metAr[1] + " ~" + Integer.toString(apx);
                     dur = "per week";
+                    metric = apx;
                 }
             }
             if(duration.getSelectedItem().toString().equals("Past Month")) {
@@ -197,15 +226,104 @@ public class GoalsViewFragment extends Fragment {
                     int apx = (int) (Double.parseDouble(metAr[2]) * 30);
                     met = metAr[0] + " " + metAr[1] + " ~" + Integer.toString(apx);
                     dur = "per month";
+                    metric = apx;
                 }
                 if (g.goalTime.equals("per week")) {
                     int apx = (int) (Double.parseDouble(metAr[2]) * 4);
                     met = metAr[0] + " " + metAr[1] + " ~" + Integer.toString(apx);
                     dur = "per month";
+                    metric = apx;
+                }
+            }
+            String op = metAr[0] + " " + metAr[1];
+            String acmp = "";
+            if(g.goalItem.equals("Calories")) {
+                if(op.equals("At least")) {
+                    if(cals >= metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                } else {
+                    if(cals < metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                }
+            } else if (g.goalItem.equals("Carbs")) {
+                if(op.equals("At least")) {
+                    if(carbs >= metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                } else {
+                    if(carbs < metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                }
+            } else if (g.goalItem.equals("Protein")) {
+                if(op.equals("At least")) {
+                    if(protein >= metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                } else {
+                    if(protein < metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                }
+            } else if (g.goalItem.equals("Fat")) {
+                if(op.equals("At least")) {
+                    if(fat >= metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                } else {
+                    if(fat < metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                }
+            } else if (g.goalItem.equals("Fiber")) {
+                if(op.equals("At least")) {
+                    if(fiber >= metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                } else {
+                    if(fiber < metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                }
+            } else if (g.goalItem.equals("Sodium")) {
+                if(op.equals("At least")) {
+                    if(sodium >= metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
+                } else {
+                    if(sodium < metric) {
+                        acmp = GOAL_MET;
+                    } else {
+                        acmp = GOAL_NOT_MET;
+                    }
                 }
             }
             GoalDisplayItem item = new GoalDisplayItem(g.goalItem, met,
-                    dur, g.getID());
+                    dur, g.getID(), acmp);
             food.add(item);
         }
 
