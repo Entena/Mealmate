@@ -15,11 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" android:layout_weight=".99" android:id="@+id/resultsTable">
     </ListView>
-    <Spinner
+    <EditText
         android:layout_width="match_parent"
         android:layout_weight=".001"
         android:layout_height="wrap_content"
-        android:id="@+id/spinnerTime" />
+        android:id="@+id/datePicker"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_weight=".001"
+        android:layout_height="wrap_content"
+        android:id="@+id/timePicker"/>
 
     <LinearLayout
         android:orientation="horizontal"

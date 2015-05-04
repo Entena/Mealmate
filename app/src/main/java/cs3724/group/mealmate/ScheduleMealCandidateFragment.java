@@ -3,9 +3,12 @@ package cs3724.group.mealmate;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.InputType;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,16 +18,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Random;
 
 
@@ -35,6 +43,13 @@ public class ScheduleMealCandidateFragment extends Fragment {
     private final static String SCHEDULE_MODE = "schedule";
     private final static String HUNGRY_MODE = "hungry";
     private final static int RANDOM_MAX = 5;
+
+    private Calendar calendar;
+    private DatePickerDialog dateDialog;
+    private TimePickerDialog timeDialog;
+    private SimpleDateFormat dateFormat;
+    private SimpleDateFormat timeFormat;
+
     private ArrayList<SearchResultsListItem> selectedMeals;
     // retained fragment
     private RetainedFragment retainFrag;
@@ -44,7 +59,8 @@ public class ScheduleMealCandidateFragment extends Fragment {
     // UI Elements
     private ListView resultsTbl;
     private Button addButton;
-
+    private EditText date;
+    private EditText time;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +69,7 @@ public class ScheduleMealCandidateFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_schedule_meal_candidate, container, false);
         setGlobals(view);
         setListeners();
+        populateUI();
         return view;
     }
 
@@ -63,6 +80,20 @@ public class ScheduleMealCandidateFragment extends Fragment {
         foodDB = retainFrag.getFoodDB();
         selectedMeals = new ArrayList<SearchResultsListItem>();
         addButton = (Button) view.findViewById(R.id.btnScheduleMealCandidateAddMeal);
+
+        date = (EditText) view.findViewById(R.id.datePicker);
+        date.setInputType(InputType.TYPE_NULL);
+        time = (EditText) view.findViewById(R.id.timePicker);
+        time.setInputType(InputType.TYPE_NULL);
+
+        //Set up calendar
+        calendar = Calendar.getInstance();
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        timeFormat = new SimpleDateFormat("K:mm a");
+        setDateField();
+        initDate();
+        setTimeField();
+        initTime();
     }
 
     private void setListeners() {
@@ -72,6 +103,25 @@ public class ScheduleMealCandidateFragment extends Fragment {
                 OnClick(v);
             }
         });
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == date) {
+                    dateDialog.show();
+                }
+            }
+        });
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == time) {
+                    timeDialog.show();
+                }
+            }
+        });
+    }
+
+    public void populateUI() {
         MMResultSet rs = retainFrag.getLastResultSet();
         //MMResultSet rs = foodDB.execQuery("SELECT * FROM foods WHERE CALS < 2000 AND PROT > 0 AND FAT < 1000 AND FIBER > 0 AND SOD < 5000");
         //MMResultSet rs = foodDB.execQuery("SELECT * FROM foods WHERE CALS < 854 AND PROT > 26");
@@ -83,21 +133,21 @@ public class ScheduleMealCandidateFragment extends Fragment {
                 size = rs.getNumResults();
             }
             int[] indexes = new int[size];
-            for(int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 indexes[i] = -1;
             }
             Random rand = new Random();
-            for(int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 boolean check;
-                while(true) {
+                while (true) {
                     check = false;
                     int pos = rand.nextInt(rs.getNumResults());
                     for (int j = 0; j < i; j++) {
-                        if(indexes[j] == pos) {
+                        if (indexes[j] == pos) {
                             check = true;
                         }
                     }
-                    if(!check) {
+                    if (!check) {
                         indexes[i] = pos;
                         break;
                     }
@@ -148,18 +198,33 @@ public class ScheduleMealCandidateFragment extends Fragment {
 
     public void OnClick(View v) {
         if (v.getId() == addButton.getId()) {
-            if (retainFrag.getMode().equals(HISTORY_MODE)) {
-                for (SearchResultsListItem item : selectedMeals) {
-                    CalendarFoodItem calItem = new CalendarFoodItem("5/2/2015", "8:00am", item.foodID);
-                    userInfoDB.addHistoryItem(calItem);
+            if (selectedMeals.size() != 0) {
+                Calendar cur = Calendar.getInstance();
+                long curTime = cur.getTimeInMillis();
+                long setTime = calendar.getTimeInMillis();
+                if (retainFrag.getMode().equals(HISTORY_MODE)) {
+                    if (setTime < curTime) {
+                        for (SearchResultsListItem item : selectedMeals) {
+                            CalendarFoodItem calItem = new CalendarFoodItem(date.getText().toString(), time.getText().toString(), item.foodID);
+                            userInfoDB.addHistoryItem(calItem);
+                        }
+                        Toast.makeText(getActivity(), "Item(s) added to History", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Please set a date in the past", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    if (setTime >= curTime) {
+                        for (SearchResultsListItem item : selectedMeals) {
+                            CalendarFoodItem calItem = new CalendarFoodItem(date.getText().toString(), time.getText().toString(), item.foodID);
+                            userInfoDB.addScheduleItem(calItem);
+                        }
+                        Toast.makeText(getActivity(), "Item(s) added to Schedule", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Please set a date in the future", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                Toast.makeText(getActivity(), "Item(s) added to History", Toast.LENGTH_SHORT).show();
             } else {
-                for (SearchResultsListItem item : selectedMeals) {
-                    CalendarFoodItem calItem = new CalendarFoodItem("5/2/2015", "8:00am", item.foodID);
-                    userInfoDB.addScheduleItem(calItem);
-                }
-                Toast.makeText(getActivity(), "Item(s) added to Schedule", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Please select a food item", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -219,5 +284,43 @@ public class ScheduleMealCandidateFragment extends Fragment {
         } else {
             return "UNKN";
         }
+    }
+
+    private void setDateField() {
+        dateDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                calendar.set(year, monthOfYear, dayOfMonth);
+
+                date.setText(dateFormat.format(calendar.getTime()));
+            }
+
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    private void setTimeField() {
+        if (retainFrag.getMode().equals(HISTORY_MODE)) {
+            calendar.add(Calendar.HOUR_OF_DAY, -1);
+        } else {
+            calendar.add(Calendar.HOUR_OF_DAY, 1);
+        }
+        timeDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+
+            public void onTimeSet(TimePicker view, int hour, int minute) {
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minute);
+                time.setText(timeFormat.format(calendar.getTime()));
+            }
+
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
+    }
+
+    private void initDate() {
+        date.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    private void initTime() {
+        time.setText(timeFormat.format(calendar.getTime()));
     }
 }
