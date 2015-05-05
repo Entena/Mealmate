@@ -62,6 +62,8 @@ public class ScheduleMealCandidateFragment extends Fragment {
     private Button addButton;
     private EditText date;
     private EditText time;
+    //event callback
+    EventListener eventcallback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -219,11 +221,15 @@ public class ScheduleMealCandidateFragment extends Fragment {
                     }
                 } else {
                     if (setTime >= curTime) {
+                        ArrayList<String> notStrs = new ArrayList<>(selectedMeals.size());
                         for (SearchResultsListItem item : selectedMeals) {
                             CalendarFoodItem calItem = new CalendarFoodItem(date.getText().toString(), time.getText().toString(), item.foodID);
                             userInfoDB.addScheduleItem(calItem);
+                            notStrs.add(item.name + "\n@" + item.diningHall);
                         }
+                        Notification not = new Notification(userInfoDB, date.getText().toString(), time.getText().toString(), notStrs);
                         Toast.makeText(getActivity(), "Item(s) added to Schedule", Toast.LENGTH_SHORT).show();
+                        eventcallback.sendToPebble(not);
                     } else {
                         Toast.makeText(getActivity(), "Please set a date in the future", Toast.LENGTH_SHORT).show();
                     }
@@ -332,5 +338,14 @@ public class ScheduleMealCandidateFragment extends Fragment {
 
     private void initTime() {
         time.setText(timeFormat.format(calendar.getTime()));
+    }
+
+    public interface EventListener {
+        public void sendToPebble(Notification not);
+    }
+
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        eventcallback = (EventListener) activity;
     }
 }
