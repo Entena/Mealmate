@@ -148,6 +148,7 @@ public class MainActivity extends Activity implements ScheduleMealCandidateFragm
         sendBroadcast(intent);
     }
 
+    //Sends the Notification to the pebble and handles notification action
     @Override
     public void sendToPebble(Notification not) {
         Log.e("Test", "SendToPebble");
@@ -174,5 +175,6 @@ public class MainActivity extends Activity implements ScheduleMealCandidateFragm
         NotificationManager manager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
         Log.e("Wes", "Notify Called");
         manager.notify(1234, notification);
+
     }
 }
