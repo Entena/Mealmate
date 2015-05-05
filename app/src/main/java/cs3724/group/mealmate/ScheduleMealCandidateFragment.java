@@ -90,7 +90,7 @@ public class ScheduleMealCandidateFragment extends Fragment {
         //Set up calendar
         calendar = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        timeFormat = new SimpleDateFormat("K:mm a");
+        timeFormat = new SimpleDateFormat("hh:mm a");
         setDateField();
         initDate();
         setTimeField();
@@ -314,6 +314,10 @@ public class ScheduleMealCandidateFragment extends Fragment {
         timeDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
 
             public void onTimeSet(TimePicker view, int hour, int minute) {
+                /*hour = hour % 12;
+                if (hour == 0) {
+                    hour = 12;
+                }*/
                 calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, minute);
                 time.setText(timeFormat.format(calendar.getTime()));
