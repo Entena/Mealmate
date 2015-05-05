@@ -89,7 +89,21 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_main_menu) {
+            MainMenuFragment mmf = new MainMenuFragment();
+            FragmentTransaction fragmentTransaction;
+            fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainScrollView, mmf, "MAINMENU");
+            fragmentTransaction.commit();
+            return true;
+        }
+
+        if (id == R.id.action_about) {
+            AboutFragment af = new AboutFragment();
+            FragmentTransaction fragmentTransaction;
+            fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainScrollView, af, "ABOUT");
+            fragmentTransaction.commit();
             return true;
         }
 
