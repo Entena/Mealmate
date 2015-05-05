@@ -4,7 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,15 +18,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ScheduleMealCandidateFragment.EventListener {
     // Fragment tags
     public final static String FRAG_RETAIN_TAG = "FRAG_RETAIN";
 
     // local variables
     RetainedFragment retainedFragment;
+    Notification not;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,5 +124,55 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed(){
         getFragmentManager().popBackStackImmediate();
+    }
+
+    /* Sends an alert to the Pebble that foods are to be eaten
+     *
+     * @param foods  A string list of foods scheduled for notification
+     * @param diningCenters  A string list of dining centers where foods are scheduled
+     */
+    public void remindPebble(Notification not) {
+        Log.e("Wes","remindPebble");
+        // Send alert
+        final Intent intent = new Intent("com.getpebble.action.SEND_NOTIFICATION");
+        final Map data = new HashMap();
+        data.put("title", "MealMate");
+        data.put("body", not.reminder());
+        final JSONObject jsonData = new JSONObject(data);
+        final String notificationData = new JSONArray().put(jsonData).toString();
+
+        intent.putExtra("messageType", "PEBBLE_ALERT");
+        intent.putExtra("sender", "MealMate");
+        intent.putExtra("notificationData", notificationData);
+
+        sendBroadcast(intent);
+    }
+
+    @Override
+    public void sendToPebble(Notification not) {
+        Log.e("Test", "SendToPebble");
+        this.not = not;
+        remindPebble(not);
+
+        NotificationCompat.Builder builder= new NotificationCompat.Builder(MainActivity.this);
+        builder.setContentTitle("MealMate Reminder");
+        builder.setContentText(not.reminder());
+        builder.setSmallIcon(R.drawable.logo);
+        builder.setTicker("MealMate scheduled meal");
+        builder.setAutoCancel(true); //automatically cancel notification when selected
+
+        //Intent
+        Intent i = new Intent(MainActivity.this, Notification.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getBaseContext());
+        stackBuilder.addParentStack(Notification.class);
+        stackBuilder.addNextIntent(i);
+        PendingIntent pi_main = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.setContentIntent(pi_main);
+        android.app.Notification notification = builder.build();
+        NotificationManager manager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
+        Log.e("Wes", "Notify Called");
+        manager.notify(1234, notification);
     }
 }
