@@ -30,7 +30,7 @@ public class AboutFragment extends Fragment {
     }
 
     private void setAbout() {
-        about.setText("MealMate is your eating companion at Virginia Tech. Schedule meals, create goals, and compare those goals against your history \n\n"
+        about.setText("MealMate is your eating companion at Virginia Tech. Schedule meals, create goals, and compare those goals against your history. \n\n"
                 + "Settings: Make sure to go to settings and enter your physical information. This information is used to calculate recommended nutritional values for you."
                 + "Also set how much earlier before your scheduled meals you want to be reminded of those meals. These reminders will be sent to your phone and also your pebble watch if you want!\n\n"
         + "I'm Hungry: Use this to have food items recommended for you. \n"
